@@ -2,7 +2,7 @@
 # Simple configuration for using airspy_adsb with piaware or just dump1090-fa
 
 cd /tmp/
-wget http://airspy.com/downloads/airspy_adsb-linux-arm.tgz
+wget -O airspy_adsb-linux-arm.tgz https://airspy.com/downloads/airspy_adsb-linux-arm.tgz
 tar xzf airspy_adsb-linux-arm.tgz
 cp airspy_adsb /usr/local/bin/
 

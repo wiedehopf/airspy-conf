@@ -28,8 +28,6 @@ WantedBy=multi-user.target
 EOF
 
 cat >/etc/default/airspy_adsb <<EOF
-#network settings
-NET="-l 30005:beast -c localhost:30104:beast"
 
 #gain is 0 to 21, each step of gain is equivalent to about 3dB, so reduce in increments of 1 if 21 is too high
 GAIN=21
@@ -40,6 +38,8 @@ OPTIONS="-f 1 -x -p"
 #sample rate can be 12 or 20, 20 may not work depending on the system
 SAMPLE_RATE=12
 
+#network settings
+NET="-l 30005:beast -c localhost:30104:beast"
 
 #don't change:
 G="-g"
@@ -76,4 +76,5 @@ fi
 
 systemctl daemon-reload
 systemctl enable airspy_adsb
+systemctl kill -s 9 dump1090-fa
 systemctl restart airspy_adsb piaware dump1090-fa

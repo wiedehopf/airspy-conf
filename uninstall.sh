@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cp /etc/default/dump1090-fa.airspyconf /etc/default/dump1090-fa
+mv /etc/default/dump1090-fa.airspyconf /etc/default/dump1090-fa
 
 piaware-config receiver-type ""
 piaware-config receiver-host ""

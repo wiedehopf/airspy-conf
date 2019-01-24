@@ -1,0 +1,22 @@
+
+#gain is 0 to 21, each step of gain is equivalent to about 3dB, so reduce in increments of 1 if 21 is too high
+GAIN= 21
+
+#other options, append or remove from the line starting with OPTIONS=
+#-f: error correction, only use 0 or 1, using a value larger than 1 produces bad data, feed services will block you
+#-v: leave it on, will provide messages to system log, read with sudo journalctl -u airspy_adsb
+#-x: dx mode, improves reception of weak messages
+#-p: bit packing, reduces USB bandwidth
+#-b: enable bias-t
+
+OPTIONS= -v -f 1 -x -p
+
+#sample rate can be 12 or 20, 20 may not work depending on the system
+SAMPLE_RATE= 12
+
+#network settings
+NET= -l 30005:beast -c localhost:30104:beast
+
+#don't change:
+G=-g
+M=-m

@@ -14,7 +14,8 @@ cp airspy_adsb /usr/local/bin/
 wget -q -O /etc/systemd/system/airspy_adsb.service $repository/airspy_adsb.service
 wget -q -O /etc/default/airspy_adsb $repository/airspy_adsb.default
 mkdir /usr/share/airspy_adsb &>/dev/null
-wget -q -O /usr/share/airspy_adsb/beast_restart.sh $repository/beast_restart.sh
+wget -q -O /usr/local/bin/restart_airspy_adsb $repository/restart_airspy_adsb
+chmod +x /usr/local/bin/restart_airspy_adsb
 systemctl enable airspy_adsb
 
 

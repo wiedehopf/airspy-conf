@@ -5,7 +5,6 @@ Documentation=https://discussions.flightaware.com/t/howto-airspy-mini-piaware-du
 
 [Service]
 EnvironmentFile=/etc/default/airspy_adsb
-ExecStartPre=-/bin/bash /usr/share/airspy_adsb/beast_restart.sh
 ExecStart=/usr/local/bin/airspy_adsb $NET $OPTIONS $G $GAIN $M $SAMPLE_RATE
 Restart=always
 StandardOutput=syslog

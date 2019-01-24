@@ -50,7 +50,7 @@ systemctl daemon-reload
 systemctl kill -s 9 dump1090-fa
 sleep 1
 systemctl restart airspy_adsb
-sleep .1
+sleep 1
 systemctl restart beast-splitter
 sleep .1
 systemctl restart piaware dump1090-fa

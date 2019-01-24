@@ -13,7 +13,10 @@ cp airspy_adsb /usr/local/bin/
 #install and enable systemd service
 wget -O /etc/systemd/system/airspy_adsb.service $repository/airspy_adsb.service
 wget -O /etc/default/airspy_adsb $repository/airspy_adsb.default
+mkdir /usr/share/airspy_adsb
+wget -O /usr/share/airspy_adsb/beast_restart.sh $repository/beast_restart.sh
 systemctl enable airspy_adsb
+
 
 if [ -f /boot/piaware-config.txt ]
 then

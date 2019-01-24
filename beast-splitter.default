@@ -9,10 +9,10 @@ ENABLED="yes"
 # This tells beast-splitter where to read data from.
 # You should provide one of --net or --serial here
 #INPUT_OPTIONS="--serial /dev/beast"
-INPUT_OPTIONS="--net localhost:29999"
+INPUT_OPTIONS="--net 127.0.0.1:29999"
 
 # Output options for beast-splitter.
 # This tells beast-splitter where to send output to,
 # either by establishing an outgoing connection (--connect)
 # or by accepting inbound connections (--listen)
-OUTPUT_OPTIONS="--listen 30005:B --connect localhost:30104:B"
+OUTPUT_OPTIONS="--listen 30005:B --connect 127.0.0.1:30104:B"

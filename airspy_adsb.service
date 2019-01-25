@@ -1,7 +1,7 @@
 
 [Unit]
 Description=Airspy ADS-B receiver
-Documentation=https://discussions.flightaware.com/t/howto-airspy-mini-piaware-dump1090-fa-configuration/44343/2
+Documentation=https://discussions.flightaware.com/t/howto-airspy-mini-piaware-dump1090-fa-configuration/44343
 
 [Service]
 EnvironmentFile=/etc/default/airspy_adsb

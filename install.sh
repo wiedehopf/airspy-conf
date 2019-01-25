@@ -25,8 +25,9 @@ then
 	piaware-config receiver-port 30005
 else
 	#package install, install dump1090-fa
-	if ! apt install dump1090-fa
+	if ! dump1090-fa --help &>/dev/null;
 	then
+		echo 'Installing dump1090-fa as it is required:'
 		wget -q http://flightaware.com/adsb/piaware/files/packages/pool/piaware/p/piaware-support/piaware-repository_3.6.3_all.deb
 		dpkg -i piaware-repository_3.6.3_all.deb
 		apt update

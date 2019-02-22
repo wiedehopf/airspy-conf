@@ -11,7 +11,8 @@ cp airspy_adsb /usr/local/bin/
 
 
 #install and enable systemd service
-wget -q -O /etc/systemd/system/airspy_adsb.service $repository/airspy_adsb.service
+rm -f /etc/systemd/system/airspy_adsb.service
+wget -q -O /lib/systemd/system/airspy_adsb.service $repository/airspy_adsb.service
 wget -q -O /etc/default/airspy_adsb $repository/airspy_adsb.default
 systemctl enable airspy_adsb
 
@@ -49,7 +50,7 @@ fi
 #restart relevant services
 systemctl daemon-reload
 systemctl kill -s 9 dump1090-fa
-sleep 1
+sleep .1
 systemctl restart airspy_adsb
 sleep .1
 systemctl restart piaware

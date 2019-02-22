@@ -14,6 +14,5 @@ piaware-config receiver-port ""
 
 
 systemctl disable airspy_adsb
-systemctl disable beast-splitter
-systemctl stop airspy_adsb beast-splitter
+systemctl stop airspy_adsb
 systemctl restart piaware dump1090-fa

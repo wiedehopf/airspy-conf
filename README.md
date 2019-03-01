@@ -10,14 +10,14 @@ It should work very well for example on a piaware-sd card image :)
 A normal Raspbian sd card image also works well. (The script will even install dump1090-fa for you, not piaware though)
 
 Content:
-* [https://github.com/wiedehopf/airspy-conf#install-command]
-* [https://github.com/wiedehopf/airspy-conf#other-feeders]
-* [https://github.com/wiedehopf/airspy-conf#Changing-airspy_adsb-options]
-* [https://github.com/wiedehopf/airspy-conf#Uninstall]
-* [https://github.com/wiedehopf/airspy-conf#Update]
+* [Installation](https://github.com/wiedehopf/airspy-conf#installation)
+* [Other feeders](https://github.com/wiedehopf/airspy-conf#other-feeders)
+* [Changing airspy options](https://github.com/wiedehopf/airspy-conf#Changing-airspy_adsb-options)
+* [Uninstall](https://github.com/wiedehopf/airspy-conf#Uninstall)
+* [Update](https://github.com/wiedehopf/airspy-conf#Update)
 ---
 
-## Install command:
+## Installation:
 
 ```
 sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/install.sh)"

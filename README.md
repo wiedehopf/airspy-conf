@@ -17,18 +17,6 @@ A normal Raspbian sd card image also works well. (The script will even install d
 sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/install.sh)"
 ```
 ---
-#### "Uninstall":
-Disables the airspy_adsb service, restores the dump1090-fa configuration and resets the piaware configuration to the default:
-```
-sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/uninstall.sh)"
-```
----
-### Update / download airspy_adsb to /usr/local/bin while preserving options in /etc/default/airspy_adsb
-
-```
-sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/update-binary.sh)"
-```
-----
 ## Other feeders:
 
 While dump1090-fa needs to be installed for this script and configuration to work, you don't have to install piaware.
@@ -69,3 +57,18 @@ Some more options are discussed on the flightaware forums:
 https://discussions.flightaware.com/t/howto-airspy-mini-and-airspy-r2-piaware-dump1090-fa-configuration/44343
 
 If you have questions it is best to just post in that thread!
+
+## "Uninstall":
+
+Disables the airspy_adsb service, restores the dump1090-fa configuration and resets the piaware configuration to the default:
+```
+sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/uninstall.sh)"
+```
+---
+
+## Update / download airspy_adsb to /usr/local/bin while preserving options in /etc/default/airspy_adsb
+
+```
+sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/update-binary.sh)"
+```
+----

@@ -1,9 +1,20 @@
 #!/bin/bash
 # Update airspy_adsb binary
 
+if uname -m | grep -i arm &>/dev/null
+then
+	binary="https://airspy.com/downloads/airspy_adsb-linux-arm.tgz"
+else
+	binary="https://airspy.com/downloads/airspy_adsb-linux-$(uname -m).tgz"
+fi
+
 cd /tmp/
-wget -O airspy_adsb-linux-arm.tgz https://airspy.com/downloads/airspy_adsb-linux-arm.tgz
-tar xzf airspy_adsb-linux-arm.tgz
+if ! wget -O airspy.tgz $binary
+then
+	echo "Unable to download a program version for your platform!"
+	exit 1
+fi
+tar xzf airspy.tgz
 systemctl stop airspy_adsb
 cp airspy_adsb /usr/local/bin/
 systemctl start airspy_adsb

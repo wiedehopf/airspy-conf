@@ -3,10 +3,20 @@
 
 repository=https://raw.githubusercontent.com/wiedehopf/airspy-conf/master
 #download and install the airspy_adsb binary
+if uname -m | grep -i arm &>/dev/null
+then
+	binary="https://airspy.com/downloads/airspy_adsb-linux-arm.tgz"
+else
+	binary="https://airspy.com/downloads/airspy_adsb-linux-$(uname -m).tgz"
+fi
 systemctl stop airspy_adsb
 cd /tmp/
-wget -q -O airspy_adsb-linux-arm.tgz https://airspy.com/downloads/airspy_adsb-linux-arm.tgz
-tar xzf airspy_adsb-linux-arm.tgz
+if ! wget -q -O airspy.tgz $binary
+then
+	echo "Unable to download a program version for your platform!"
+	exit 1
+fi
+tar xzf airspy.tgz
 cp airspy_adsb /usr/local/bin/
 
 

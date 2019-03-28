@@ -9,7 +9,7 @@ GAIN= 21
 #-p: bit packing, reduces USB bandwidth but slightly increases CPU load. Not recommended on RPi 3B+
 #-b: enable bias-t
 
-OPTIONS= -v -f 1 -p
+OPTIONS= -v -f 1
 
 #sample rate can be 12 or 20, 20 may not work depending on the system
 SAMPLE_RATE= 12

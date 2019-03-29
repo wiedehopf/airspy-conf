@@ -48,8 +48,14 @@ else
 	#configure dump109-fa
 	if dump1090-fa --help &>/dev/null;
 	then
+		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
+		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
 		cp -n /etc/default/dump1090-fa /etc/default/dump1090-fa.airspyconf
 		wget -q -O /etc/default/dump1090-fa $repository/dump1090-fa.default
+		if [ -n "$LAT" ] && [ -n "$LON" ]
+		then
+			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/dump1090-fa
+		fi
 	else
 		echo "dump1090-fa needs to be installed for this script to work!"
 	fi

@@ -30,12 +30,12 @@ systemctl enable airspy_adsb
 if [ -f /boot/piaware-config.txt ]
 then
 	#configure piaware to custom mode
-	sed -i -e 's@beast - radarcape - relay - other@# added by airspy\n\t\tother {\n\t\t\tlappend receiverOpts "--net-only" "--net-bo-port 30005" "--fix"\n\t\t}\n\n\t\tbeast - radarcape - relay@' /usr/lib/piaware-support/generate-receiver-config
+	#sed -i -e 's@beast - radarcape - relay - other@# added by airspy\n\t\tother {\n\t\t\tlappend receiverOpts "--net-only" "--net-bo-port 30005" "--fix"\n\t\t}\n\n\t\tbeast - radarcape - relay@' /usr/lib/piaware-support/generate-receiver-config
 	#piaware version > 3.7
-	sed -i -e 's@none - other@# added by airspy\n\t\tother {\n\t\t\tlappend receiverOpts "--net-only" "--net-bo-port 30005" "--fix"\n\t\t}\n\n\t\tnone@' /usr/lib/piaware-support/generate-receiver-config
-	piaware-config receiver-type other
+	#sed -i -e 's@none - other@# added by airspy\n\t\tother {\n\t\t\tlappend receiverOpts "--net-only" "--net-bo-port 30005" "--fix"\n\t\t}\n\n\t\tnone@' /usr/lib/piaware-support/generate-receiver-config
+	piaware-config receiver-type relay
 	piaware-config receiver-host localhost
-	piaware-config receiver-port 30005
+	piaware-config receiver-port 47787
 else
 	#package install, install dump1090-fa
 	if ! dump1090-fa --help &>/dev/null;

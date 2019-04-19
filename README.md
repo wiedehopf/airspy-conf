@@ -56,7 +56,7 @@ Ctrl-O and Enter/Return to save and Ctrl-X to exit
 
 Restart airspy_adsb with
 ```
-systemctl restart airspy_adsb
+sudo systemctl restart airspy_adsb dump1090-fa
 ```
 
 Some more options are discussed on the flightaware forums:

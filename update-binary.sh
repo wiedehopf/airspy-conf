@@ -15,6 +15,6 @@ then
 	exit 1
 fi
 tar xzf airspy.tgz
-systemctl stop airspy_adsb
+systemctl stop airspy_adsb dump1090-fa	
 cp airspy_adsb /usr/local/bin/
-systemctl start airspy_adsb
+systemctl restart airspy_adsb dump1090-fa

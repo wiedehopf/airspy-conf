@@ -75,3 +75,5 @@ sleep .1
 systemctl restart piaware
 sleep .1
 systemctl restart dump1090-fa
+sleep .1
+systemctl restart beast-splitter &>/dev/null

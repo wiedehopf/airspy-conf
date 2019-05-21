@@ -42,8 +42,8 @@ else
 	if ! dump1090-fa --help &>/dev/null;
 	then
 		echo 'Installing dump1090-fa as it is required:'
-		wget -q http://flightaware.com/adsb/piaware/files/packages/pool/piaware/p/piaware-support/piaware-repository_3.6.3_all.deb
-		dpkg -i piaware-repository_3.6.3_all.deb
+		wget -q http://flightaware.com/adsb/piaware/files/packages/pool/piaware/p/piaware-support/piaware-repository_3.7.1_all.deb
+		dpkg -i piaware-repository_3.7.1_all.deb
 		apt update
 		apt install dump1090-fa
 	fi

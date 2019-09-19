@@ -9,7 +9,7 @@ then
 else
 	binary="https://airspy.com/downloads/airspy_adsb-linux-$(uname -m).tgz"
 fi
-systemctl stop airspy_adsb
+systemctl stop airspy_adsb &>/dev/null
 cd /tmp/
 if ! wget -q -O airspy.tgz $binary
 then

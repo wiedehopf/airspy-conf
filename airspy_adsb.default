@@ -21,7 +21,7 @@ SAMPLE_RATE= 12
 # will not work properly and a sample rate of 12 is most likely better.
 
 #network settings
-NET= -l 47806:asavr -l 47787:beast -c localhost:30004:beast
+NET= -l 47787:beast -c localhost:30004:beast
 
 #don't change:
 G=-g

@@ -5,9 +5,17 @@ On popular request i've written a script that does all the work, so all you need
 This script changes the piaware configuration, dump1090-fa configuration and installs a systemd-service to automatically run airspy_adsb.
 I have tested the script locally, it should work. But such things sometimes don't work as intended, keep that in mind.
 
-Piaware needs to be installed before you run this script otherwise the script can't change the configuration.
+dump1090-fa needs to be installed before you run this script otherwise the script can't change the configuration.
 It should work very well for example on a piaware-sd card image :)
-A normal Raspbian sd card image also works well. (The script will even install dump1090-fa for you, not piaware though)
+A normal Raspbian sd card image also works well.
+(On a Raspberry Pi the script will even install dump1090-fa for you if it's not present)
+
+If you want to use it with dump1090-fa on another system you will have to install it yourself before running this script.
+
+In case you don't want dump1090-fa to be installed/configured, you can download the script, and run it like this:
+```
+sudo bash install.sh only-airspy
+```
 
 Content:
 * [Installation](https://github.com/wiedehopf/airspy-conf#installation)

@@ -24,8 +24,16 @@ cp airspy_adsb /usr/local/bin/
 rm -f /etc/systemd/system/airspy_adsb.service
 wget -q -O /lib/systemd/system/airspy_adsb.service $repository/airspy_adsb.service
 wget -q -O /etc/default/airspy_adsb $repository/airspy_adsb.default
-systemctl enable airspy_adsb
 
+systemctl enable airspy_adsb
+systemctl restart airspy_adsb
+
+if [[ "$1" == "only-airspy" ]]; then
+	echo "airspy_adsb service installed.\n\
+	Listening on port 47787 to provide beast data.\n\
+	Trying to connect to port 30004 to provide beast data."
+	exit 0
+fi
 
 if [ -f /boot/piaware-config.txt ]
 then
@@ -39,13 +47,23 @@ then
 	piaware-config receiver-port 47787
 else
 	#package install, install dump1090-fa
-	if ! dump1090-fa --help &>/dev/null;
+	if ! command dump1090-fa &>/dev/null; then
 	then
 		echo 'Installing dump1090-fa as it is required:'
 		wget -q http://flightaware.com/adsb/piaware/files/packages/pool/piaware/p/piaware-support/piaware-repository_3.7.2_all.deb
-		dpkg -i piaware-repository_3.7.1_all.deb
+		dpkg -i piaware-repository_3.7.2_all.deb
 		apt update
-		apt install dump1090-fa
+		if ! apt install dump1090-fa; then
+			echo " ----------"
+			echo "airspy_adsb service installed.\n\
+			Listening on port 47787 to provide beast data.\n\
+			Trying to connect to port 30004 to provide beast data."
+			echo " ----------"
+			echo "Unable to install dump1090-fa, can't configure dump1090-fa!"
+			echo "If you want to use dump1090-fa, install dump1090-fa manually and then re-run this install scrit."
+			echo " ----------"
+			exit 1
+		fi
 	fi
 
 	#configure dump109-fa
@@ -69,8 +87,6 @@ fi
 #restart relevant services
 systemctl daemon-reload
 systemctl kill -s 9 dump1090-fa
-sleep .1
-systemctl restart airspy_adsb
 sleep .1
 systemctl restart piaware
 sleep .1

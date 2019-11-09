@@ -5,11 +5,16 @@ GAIN= 21
 #other options, append or remove from the line starting with OPTIONS=
 #-f: error correction, only use 0 or 1, using a value larger than 1 produces bad data, feed services will block you
 #-v: leave it on, will provide messages to system log, read with sudo journalctl -u airspy_adsb
-#-x: dx mode, improves reception of weak messages, introduces some bogus messages
-#-p: bit packing, reduces USB bandwidth but slightly increases CPU load. Not recommended on RPi 3B+
+#-x: dx mode, improves reception of weak messages, introduces bogus messages (opinion: not worth it)
+#-p: bit packing, reduces USB bandwidth but slightly increases CPU load. Not recommended in most cases.
+#-e: preamble filter sensitivity, values: 0.1 to 10.0 (higher values increase CPU load and can improve detection)
+#-w <whitelist_threshold>   Whitelist threshold: 1..10 (recommended: 3, default: 2)
 #-b: enable bias-t
 
 OPTIONS= -v -f 1
+
+# please always check the following command for the options used by the current version:
+# airspy_adsb -h
 
 #sample rate can be 12 or 20, 20 may not work depending on the system
 SAMPLE_RATE= 12

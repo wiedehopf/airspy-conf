@@ -31,3 +31,6 @@ NET= -l 47787:beast -c localhost:30004:beast
 #don't change:
 G=-g
 M=-m
+
+#processor affinity, for XU4 you can try 4-7, for the N2 try 2-5
+AFFINITY="0-7"

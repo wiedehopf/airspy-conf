@@ -25,6 +25,10 @@ rm -f /etc/systemd/system/airspy_adsb.service
 wget -q -O /lib/systemd/system/airspy_adsb.service $repository/airspy_adsb.service
 wget -q -O /etc/default/airspy_adsb $repository/airspy_adsb.default
 
+if ! command -v /usr/bin/taskset &>/dev/null; then
+	sed -i -e 's?/usr/bin/taskset.*AFFINITY ??' /lib/systemd/system/airspy_adsb.service
+fi
+
 systemctl enable airspy_adsb
 systemctl restart airspy_adsb
 

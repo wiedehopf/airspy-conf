@@ -8,7 +8,7 @@ GAIN= 21
 #-x: dx mode, improves reception of weak messages, introduces bogus messages (opinion: not worth it)
 #-p: bit packing, reduces USB bandwidth but slightly increases CPU load. Not recommended in most cases.
 #-e: preamble filter sensitivity, values: 0.1 to 10.0 (higher values increase CPU load and can improve detection)
-#-w <whitelist_threshold>   Whitelist threshold: 1..10 (recommended: 3, default: 2)
+#-w <whitelist_threshold>   Whitelist threshold: 1..10 (default: 3, lower not recommended due to bogus messages)
 #-b: enable bias-t
 
 OPTIONS= -v -f 1

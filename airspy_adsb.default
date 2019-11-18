@@ -3,7 +3,9 @@
 GAIN= 21
 
 #other options, append or remove from the line starting with OPTIONS=
-#-f: error correction, only use 0 or 1, using a value larger than 1 produces bad data, feed services will block you
+#-f: error correction bits, 0, 1 or 2: default and recommended is 1 for now.
+#    (-f 2 is not recommended at the moment when feeding FlightAware and maybe others
+#    as they have expressed concern about 2 bit error correction)
 #-v: leave it on, will provide messages to system log, read with sudo journalctl -u airspy_adsb
 #-x: dx mode, improves reception of weak messages, introduces bogus messages (opinion: not worth it)
 #-p: bit packing, reduces USB bandwidth but slightly increases CPU load. Not recommended in most cases.

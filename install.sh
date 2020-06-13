@@ -3,12 +3,16 @@
 
 repository=https://raw.githubusercontent.com/wiedehopf/airspy-conf/master
 #download and install the airspy_adsb binary
-if uname -m | grep -F -e arm -e aarch64 &>/dev/null
+if uname -m | grep -F -e arm64 -e aarch64 &>/dev/null
+then
+	binary="https://airspy.com/downloads/airspy_adsb-linux-arm64.tgz"
+elif uname -m | grep -F -e arm &>/dev/null
 then
 	binary="https://airspy.com/downloads/airspy_adsb-linux-arm.tgz"
 else
 	binary="https://airspy.com/downloads/airspy_adsb-linux-$(uname -m).tgz"
 fi
+
 systemctl stop airspy_adsb &>/dev/null
 cd /tmp/
 if ! wget -q -O airspy.tgz $binary

@@ -1,11 +1,5 @@
-
-# dump1090-fa configuration
 # This is read by the systemd service file as an environment file,
 # and evaluated by some scripts as a POSIX shell fragment.
-
-# If you are using a PiAware sdcard image, this config file is regenerated
-# on boot based on the contents of piaware-config.txt; any changes made to this
-# file will be lost.
 
 RECEIVER_OPTIONS="--net-only --write-json-every 1"
 DECODER_OPTIONS="--max-range 720 --stats-range --stats-every 86400"

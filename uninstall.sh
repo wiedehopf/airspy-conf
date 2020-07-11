@@ -8,9 +8,11 @@ then
 	sed -i -e 's/beast - radarcape - relay/beast - radarcape - relay - other/' /usr/lib/piaware-support/generate-receiver-config
 fi
 
-piaware-config receiver-type ""
-piaware-config receiver-host ""
-piaware-config receiver-port ""
+if [ -f /boot/piaware-config.txt ]
+    piaware-config receiver-type ""
+    piaware-config receiver-host "127.0.0.1"
+    piaware-config receiver-port "30005"
+fi
 
 
 systemctl disable airspy_adsb

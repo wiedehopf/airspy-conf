@@ -2,22 +2,26 @@
 
 On popular request i've written a script that does all the work, so all you need to do is change the gain if you want :)
 
-This script changes the piaware configuration, dump1090-fa configuration and installs a systemd-service to automatically run airspy_adsb.
+This script changes the piaware configuration, dump1090-fa / readsb configuration and installs a systemd-service to automatically run airspy_adsb.
 I have tested the script locally, it should work. But such things sometimes don't work as intended, keep that in mind.
 
 In case your Airspy was purchased earlier than 2017, you will probably need to update its firmware, see the note in regards to ADS-B on the quick start page: https://airspy.com/quickstart/
 
-dump1090-fa needs to be installed before you run this script otherwise the script can't change the configuration.
+dump1090-fa or readsb needs to be installed before you run this script otherwise the script can't change the configuration.
 It should work very well for example on a piaware-sd card image :)
 A normal Raspbian sd card image also works well.
 (On a Raspberry Pi the script will even install dump1090-fa for you if it's not present)
-
-If you want to use it with dump1090-fa on another system you will have to install it yourself before running this script.
 
 In case you don't want dump1090-fa to be installed/configured, you can download the script, and run it like this:
 ```
 sudo bash install.sh only-airspy
 ```
+
+If you are on a normal PC laptop and not on an RPi, i'd recommend using readsb instead of dump1090-fa:
+https://github.com/wiedehopf/adsb-scripts/wiki/Automatic-installation-for-readsb
+
+Generally readsb might be nicer than dump1090-fa. Just to reiterate, this needs to be done before running this script.
+Or you can rerun this install script after installing readsb. You'll have to reconfigure airspy_adsb as this install overwrites the configuration.
 
 Content:
 * [Installation](https://github.com/wiedehopf/airspy-conf#installation)
@@ -35,7 +39,7 @@ sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-con
 ---
 ## Other feeders:
 
-While dump1090-fa needs to be installed for this script and configuration to work, you don't have to install piaware.
+While dump1090-fa can be used for this script and configuration to work, you don't have to install piaware.
 It should work fine with all the common feeders (fr24, planefinder, ...).
 Just point them to port 30005 (beast protocol).
 

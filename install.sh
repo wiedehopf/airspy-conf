@@ -75,8 +75,7 @@ else
 	fi
 
 	#configure dump109-fa
-	if dump1090-fa --help &>/dev/null;
-	then
+	if dump1090-fa --help &>/dev/null; then
 		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
 		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
 		cp -n /etc/default/dump1090-fa /etc/default/dump1090-fa.airspyconf
@@ -85,8 +84,17 @@ else
 		then
 			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/dump1090-fa
 		fi
+	elif command -v readsb &>/dev/null; then
+		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/readsb | head -n1)
+		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/readsb | head -n1)
+		cp -n /etc/default/readsb /etc/default/readsb.airspyconf
+		wget -q -O /etc/default/readsb $repository/dump1090-fa.default
+		if [ -n "$LAT" ] && [ -n "$LON" ]
+		then
+			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/readsb
+		fi
 	else
-		echo "dump1090-fa needs to be installed for this script to work!"
+		echo "dump1090-fa or readsb needs to be installed for this script to work!"
 	fi
 
 fi
@@ -94,10 +102,12 @@ fi
 
 #restart relevant services
 systemctl daemon-reload
-systemctl kill -s 9 dump1090-fa
+systemctl kill -s 9 dump1090-fa &>/dev/null
+systemctl kill -s 9 readsb &>/dev/null
 sleep .1
-systemctl restart piaware
+systemctl restart piaware &>/dev/null
 sleep .1
-systemctl restart dump1090-fa
+systemctl restart dump1090-fa &>/dev/null
+systemctl restart readsb &>/dev/null
 sleep .1
 systemctl restart beast-splitter &>/dev/null

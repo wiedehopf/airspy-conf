@@ -1,5 +1,6 @@
 #!/bin/bash
 # Simple configuration for using airspy_adsb with piaware or just dump1090-fa
+set -e
 
 repository=https://raw.githubusercontent.com/wiedehopf/airspy-conf/master
 #download and install the airspy_adsb binary
@@ -15,7 +16,7 @@ fi
 
 systemctl stop airspy_adsb &>/dev/null
 cd /tmp/
-if ! wget -q -O airspy.tgz $binary
+if ! wget -q -O airspy.tgz "$binary"
 then
 	echo "Unable to download a program version for your platform!"
 	exit 1
@@ -37,7 +38,7 @@ systemctl enable airspy_adsb
 systemctl restart airspy_adsb
 
 if [[ "$1" == "only-airspy" ]]; then
-	echo "airspy_adsb service installed.\n\
+	printf "airspy_adsb service installed.\n\
 	Listening on port 47787 to provide beast data.\n\
 	Trying to connect to port 30004 to provide beast data."
 	exit 0
@@ -63,7 +64,7 @@ else
 		apt update
 		if ! apt install dump1090-fa; then
 			echo " ----------"
-			echo "airspy_adsb service installed.\n\
+			printf "airspy_adsb service installed.\n\
 			Listening on port 47787 to provide beast data.\n\
 			Trying to connect to port 30004 to provide beast data."
 			echo " ----------"

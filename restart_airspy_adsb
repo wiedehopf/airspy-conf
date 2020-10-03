@@ -4,5 +4,5 @@ systemctl restart airspy_adsb
 	systemctl stop beast-splitter &>/dev/null
 	sleep 10
 	systemctl start beast-splitter &>/dev/null
-)&
+) &
 exit 0

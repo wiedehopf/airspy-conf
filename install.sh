@@ -4,11 +4,9 @@ set -e
 
 repository=https://raw.githubusercontent.com/wiedehopf/airspy-conf/master
 #download and install the airspy_adsb binary
-if uname -m | grep -F -e arm64 -e aarch64 &>/dev/null
-then
+if uname -m | grep -F -e arm64 -e aarch64 &>/dev/null; then
 	binary="https://airspy.com/downloads/airspy_adsb-linux-arm64.tgz"
-elif uname -m | grep -F -e arm &>/dev/null
-then
+elif uname -m | grep -F -e arm &>/dev/null; then
 	binary="https://airspy.com/downloads/airspy_adsb-linux-arm.tgz"
 else
 	binary="https://airspy.com/downloads/airspy_adsb-linux-$(uname -m).tgz"
@@ -16,14 +14,12 @@ fi
 
 systemctl stop airspy_adsb &>/dev/null
 cd /tmp/
-if ! wget -q -O airspy.tgz "$binary"
-then
+if ! wget -q -O airspy.tgz "$binary"; then
 	echo "Unable to download a program version for your platform!"
 	exit 1
 fi
 tar xzf airspy.tgz
 cp airspy_adsb /usr/local/bin/
-
 
 #install and enable systemd service
 rm -f /etc/systemd/system/airspy_adsb.service
@@ -44,8 +40,7 @@ if [[ "$1" == "only-airspy" ]]; then
 	exit 0
 fi
 
-if [ -f /boot/piaware-config.txt ]
-then
+if [ -f /boot/piaware-config.txt ]; then
 	#configure piaware to custom mode
 	#sed -i -e 's@beast - radarcape - relay - other@# added by airspy\n\t\tother {\n\t\t\tlappend receiverOpts "--net-only" "--net-bo-port 30005" "--fix"\n\t\t}\n\n\t\tbeast - radarcape - relay@' /usr/lib/piaware-support/generate-receiver-config
 	#piaware version > 3.7
@@ -56,8 +51,7 @@ then
 	piaware-config receiver-port 47787
 else
 	#package install, install dump1090-fa
-	if ! command -v dump1090-fa &>/dev/null && ! command -v readsb &>/dev/null
-	then
+	if ! command -v dump1090-fa &>/dev/null && ! command -v readsb &>/dev/null; then
 		echo 'Installing dump1090-fa as it is required:'
 		wget -q http://flightaware.com/adsb/piaware/files/packages/pool/piaware/p/piaware-support/piaware-repository_3.7.2_all.deb
 		dpkg -i piaware-repository_3.7.2_all.deb
@@ -81,8 +75,7 @@ else
 		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
 		cp -n /etc/default/dump1090-fa /etc/default/dump1090-fa.airspyconf
 		wget -q -O /etc/default/dump1090-fa $repository/dump1090-fa.default
-		if [ -n "$LAT" ] && [ -n "$LON" ]
-		then
+		if [ -n "$LAT" ] && [ -n "$LON" ]; then
 			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/dump1090-fa
 		fi
 	elif command -v readsb &>/dev/null; then
@@ -90,8 +83,7 @@ else
 		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/readsb | head -n1)
 		cp -n /etc/default/readsb /etc/default/readsb.airspyconf
 		wget -q -O /etc/default/readsb $repository/dump1090-fa.default
-		if [ -n "$LAT" ] && [ -n "$LON" ]
-		then
+		if [ -n "$LAT" ] && [ -n "$LON" ]; then
 			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/readsb
 		fi
 	else
@@ -99,7 +91,6 @@ else
 	fi
 
 fi
-
 
 #restart relevant services
 systemctl daemon-reload

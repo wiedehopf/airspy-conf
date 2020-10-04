@@ -16,6 +16,6 @@ if ! wget -O airspy.tgz "$binary"; then
 	exit 1
 fi
 tar xzf airspy.tgz
-systemctl stop airspy_adsb
+systemctl stop airspy_adsb || true
 cp airspy_adsb /usr/local/bin/
 systemctl restart airspy_adsb

@@ -12,7 +12,7 @@ else
 	binary="https://airspy.com/downloads/airspy_adsb-linux-$(uname -m).tgz"
 fi
 
-systemctl stop airspy_adsb &>/dev/null
+systemctl stop airspy_adsb &>/dev/null || true
 cd /tmp/
 if ! wget -q -O airspy.tgz "$binary"; then
 	echo "Unable to download a program version for your platform!"
@@ -55,7 +55,7 @@ else
 		echo 'Installing dump1090-fa as it is required:'
 		wget -q http://flightaware.com/adsb/piaware/files/packages/pool/piaware/p/piaware-support/piaware-repository_3.7.2_all.deb
 		dpkg -i piaware-repository_3.7.2_all.deb
-		apt update
+		apt update || true
 		if ! apt install dump1090-fa; then
 			echo " ----------"
 			printf "airspy_adsb service installed.\n\
@@ -94,12 +94,12 @@ fi
 
 #restart relevant services
 systemctl daemon-reload
-systemctl kill -s 9 dump1090-fa &>/dev/null
-systemctl kill -s 9 readsb &>/dev/null
+systemctl kill -s 9 dump1090-fa &>/dev/null || true
+systemctl kill -s 9 readsb &>/dev/null || true
 sleep .1
-systemctl restart piaware &>/dev/null
+systemctl restart piaware &>/dev/null || true
 sleep .1
-systemctl restart dump1090-fa &>/dev/null
-systemctl restart readsb &>/dev/null
+systemctl restart dump1090-fa &>/dev/null || true
+systemctl restart readsb &>/dev/null || true
 sleep .1
-systemctl restart beast-splitter &>/dev/null
+systemctl restart beast-splitter &>/dev/null || true

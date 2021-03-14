@@ -69,7 +69,7 @@ else
 		fi
 	fi
 
-	#configure dump109-fa
+	#configure dump1090-fa / readsb
 	if dump1090-fa --help &>/dev/null; then
 		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
 		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
@@ -82,7 +82,7 @@ else
 		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/readsb | head -n1)
 		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/readsb | head -n1)
 		cp -n /etc/default/readsb /etc/default/readsb.airspyconf
-		wget -q -O /etc/default/readsb $repository/dump1090-fa.default
+		wget -q -O /etc/default/readsb $repository/readsb.default
 		if [ -n "$LAT" ] && [ -n "$LON" ]; then
 			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/readsb
 		fi

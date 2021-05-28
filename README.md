@@ -80,7 +80,7 @@ Ctrl-O and Enter/Return to save and Ctrl-X to exit
 Restart airspy_adsb with:
 
 ```shell
-sudo systemctl restart airspy_adsb dump1090-fa
+sudo systemctl restart airspy_adsb
 ```
 
 Some more options are discussed on the flightaware forums:
@@ -90,7 +90,7 @@ If you have questions it is best to just post in that thread!
 
 ## Uninstall
 
-Disables the airspy_adsb service, restores the dump1090-fa configuration and resets the piaware configuration to the default:
+Disables the airspy_adsb service, restores the readsb / dump1090-fa configuration and resets the piaware configuration to the default:
 
 ```shell
 sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/uninstall.sh)"

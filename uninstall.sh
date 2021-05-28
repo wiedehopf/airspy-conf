@@ -2,6 +2,7 @@
 set -e
 
 mv /etc/default/dump1090-fa.airspyconf /etc/default/dump1090-fa || true
+mv /etc/default/readsb.airspyconf /etc/default/readsb || true
 
 if [ -f /usr/lib/piaware-support/generate-receiver-config ]; then
     sed -i -e '/# added by airspy/,+4d' /usr/lib/piaware-support/generate-receiver-config

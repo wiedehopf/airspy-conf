@@ -4,7 +4,9 @@ set -e
 
 repository=https://raw.githubusercontent.com/wiedehopf/airspy-conf/master
 #download and install the airspy_adsb binary
-if uname -m | grep -F -e arm64 -e aarch64 &>/dev/null; then
+if dpkg --print-architecture | grep -F -e armhf &>/dev/null; then
+	binary="https://airspy.com/downloads/airspy_adsb-linux-arm.tgz"
+elif uname -m | grep -F -e arm64 -e aarch64 &>/dev/null; then
 	binary="https://airspy.com/downloads/airspy_adsb-linux-arm64.tgz"
 elif uname -m | grep -F -e arm &>/dev/null; then
 	binary="https://airspy.com/downloads/airspy_adsb-linux-arm.tgz"

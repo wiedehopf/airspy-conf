@@ -50,27 +50,15 @@ if [ -f /boot/piaware-config.txt ]; then
 	piaware-config receiver-host localhost
 	piaware-config receiver-port 47787
 else
-	#package install, install dump1090-fa
 	if ! command -v dump1090-fa &>/dev/null && ! command -v readsb &>/dev/null; then
-		echo 'Installing dump1090-fa as it is required:'
-		wget -q http://flightaware.com/adsb/piaware/files/packages/pool/piaware/p/piaware-support/piaware-repository_3.7.2_all.deb
-		dpkg -i piaware-repository_3.7.2_all.deb
-		apt update || true
-		if ! apt install dump1090-fa; then
-			echo " ----------"
-			printf "airspy_adsb service installed.\n\
-			Listening on port 47787 to provide beast data.\n\
-			Trying to connect to port 30004 to provide beast data."
-			echo " ----------"
-			echo "Unable to install dump1090-fa, can't configure dump1090-fa!"
-			echo "If you want to use dump1090-fa, install dump1090-fa manually and then re-run this install scrit."
-			echo " ----------"
-			exit 1
-		fi
+        echo "Please install readsb or dump1090-fa before installing airspy-conf!"
+        echo "https://github.com/wiedehopf/adsb-scripts/wiki/Automatic-installation-for-dump1090-fa"
+        echo "https://github.com/wiedehopf/adsb-scripts/wiki/Automatic-installation-for-readsb"
+        exit 1
 	fi
 
 	#configure dump1090-fa / readsb
-	if dump1090-fa --help &>/dev/null; then
+	if command -v dump1090-fa &>/dev/null; then
 		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
 		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
 		cp -n /etc/default/dump1090-fa /etc/default/dump1090-fa.airspyconf
@@ -78,7 +66,8 @@ else
 		if [ -n "$LAT" ] && [ -n "$LON" ]; then
 			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/dump1090-fa
 		fi
-	elif command -v readsb &>/dev/null; then
+    fi
+	if command -v readsb &>/dev/null; then
 		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/readsb | head -n1)
 		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/readsb | head -n1)
 		cp -n /etc/default/readsb /etc/default/readsb.airspyconf
@@ -86,10 +75,7 @@ else
 		if [ -n "$LAT" ] && [ -n "$LON" ]; then
 			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/readsb
 		fi
-	else
-		echo "dump1090-fa or readsb needs to be installed for this script to work!"
 	fi
-
 fi
 
 #restart relevant services
@@ -103,3 +89,7 @@ systemctl restart dump1090-fa &>/dev/null || true
 systemctl restart readsb &>/dev/null || true
 sleep .1
 systemctl restart beast-splitter &>/dev/null || true
+
+
+echo "------------------------"
+echo "airspy-conf install finished successfully!"

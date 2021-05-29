@@ -71,8 +71,9 @@ There are other lines where you can change the gain or sample rate:
 #gain is 0 to 21, each step of gain is equivalent to about 3dB, so reduce in increments of 1 if 21 is too high
 GAIN=21
 
-#sample rate can be 12 or 20, 20 is not recommended on the Raspbery Pi, if you chose it please check for lost samples with journalctl -en100 -u airspy_adsb
 SAMPLE_RATE=12
+# sample rate can be 12 or 20, 20 may not work depending on the system
+# when using the Airspy Mini a sample rate of 20 MSPS is not officially supported and an extra heat sink attached to the metal case or active ventilation are recommended
 ```
 
 Ctrl-O and Enter/Return to save and Ctrl-X to exit

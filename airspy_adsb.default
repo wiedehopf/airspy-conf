@@ -11,21 +11,19 @@ GAIN= 21
 #-p: bit packing, reduces USB bandwidth but slightly increases CPU load. Not recommended in most cases.
 #-e: preamble filter sensitivity, values: 0.1 to 10.0 (higher values increase CPU load and can improve detection)
 #-w <whitelist_threshold>   Whitelist threshold: 1..10 (default: 3, lower not recommended due to bogus messages)
-#-b: enable bias-t
+#-b: enable bias-t (50 mA max according to specification, using it to power the rtl-sdr LNA is not recommended as the unit will run too hot)
 
 OPTIONS= -v -f 1
 
 # please always check the following command for the options used by the current version:
 # airspy_adsb -h
 
-#sample rate can be 12 or 20, 20 may not work depending on the system
+# sample rate can be 12 or 20, 20 may not work depending on the system
+# when using the Airspy Mini a sample rate of 20 MSPS is not officially supported and an extra heat sink attached to the metal case or active ventilation are recommended
 SAMPLE_RATE= 12
 
-# when trying a sample rate of 20 on the Raspberry Pi
-# checking journalctl -efn -u airspy_adsb for lost samples
-# is recommended. A few lost samples after a reboot is not a problem,
-# but during peak traffic there should be no lost samples otherwise MLAT
-# will not work properly and a sample rate of 12 is most likely better.
+# when using a sample rate of 20, check if MLAT is stable!
+# If MLAT isn't stable, 12 is the better choice and performance is similar in most cases.
 
 #network settings
 NET= -l 47787:beast -c localhost:30004:beast

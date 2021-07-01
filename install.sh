@@ -42,7 +42,7 @@ if [[ "$1" == "only-airspy" ]]; then
 	exit 0
 fi
 
-if [ -f /boot/piaware-config.txt ]; then
+if [[ -f /boot/piaware-config.txt ]] && { piaware-config -show manage-config | grep -qs yes; }; then
 	#configure piaware to custom mode
 	#sed -i -e 's@beast - radarcape - relay - other@# added by airspy\n\t\tother {\n\t\t\tlappend receiverOpts "--net-only" "--net-bo-port 30005" "--fix"\n\t\t}\n\n\t\tbeast - radarcape - relay@' /usr/lib/piaware-support/generate-receiver-config
 	#piaware version > 3.7

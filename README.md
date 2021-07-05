@@ -89,6 +89,14 @@ https://discussions.flightaware.com/t/howto-airspy-mini-and-airspy-r2-piaware-du
 
 If you have questions it is best to just post in that thread!
 
+## Show the log, please show that in case of issues:
+```shell
+# last 60 lines:
+sudo journalctl -u airspy_adsb | tail -n60
+# scroll the last 2000 lines
+sudo journalctl -u airspy_adsb -e -n2000
+```
+
 ## Uninstall
 
 Disables the airspy_adsb service, restores the readsb / dump1090-fa configuration and resets the piaware configuration to the default:

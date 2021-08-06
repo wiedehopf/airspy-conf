@@ -10,13 +10,6 @@ In case your Airspy was purchased earlier than 2017, you will probably need to u
 dump1090-fa or readsb needs to be installed before you run this script otherwise the script can't change the configuration.
 It should work very well for example on a piaware-sd card image :)
 A normal Raspbian sd card image also works well.
-(On a Raspberry Pi the script will even install dump1090-fa for you if it's not present)
-
-In case you don't want dump1090-fa to be installed/configured, you can download the script, and run it like this:
-
-```shell
-sudo bash install.sh only-airspy
-```
 
 If you are on a normal PC laptop and not on an RPi, i'd recommend using readsb instead of dump1090-fa:
 https://github.com/wiedehopf/adsb-scripts/wiki/Automatic-installation-for-readsb
@@ -39,6 +32,13 @@ Content:
 ```shell
 sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/install.sh)"
 ```
+
+In case you're an advanced user and don't want dump1090-fa / readsb to be re-configured for some reason, you can download the script and run it like this:
+
+```shell
+sudo bash install.sh only-airspy
+```
+
 
 ---
 

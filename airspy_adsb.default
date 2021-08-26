@@ -7,13 +7,16 @@ GAIN= 21
 #    (-f 2 is not recommended at the moment when feeding FlightAware and maybe others
 #    as they have expressed concern about 2 bit error correction)
 #-v: leave it on, will provide messages to system log, read with sudo journalctl -u airspy_adsb
-#-x: dx mode, improves reception of weak messages, introduces bogus messages (opinion: not worth it)
+#-x: dx mode, introduces bogus messages, improves reception of weak messages (opinion: not worth it)
 #-p: bit packing, reduces USB bandwidth but slightly increases CPU load. Not recommended in most cases.
-#-e: preamble filter sensitivity, values: 0.1 to 10.0 (higher values increase CPU load and can improve detection)
+#-e: preamble filter sensitivity, values: 0.1 to 50.0 (higher values increase CPU load and can improve detection)
+#-C: CPU target percentage: 5 to 95 (adjusts preamble filter while running to match CPU target)
+#-E <max_preamble_filter>   Maximum preamble filter when using CPU target 0..30 (default: 30)
 #-w <whitelist_threshold>   Whitelist threshold: 1..10 (default: 3, lower not recommended due to bogus messages, increase to make bogus 1 message planes even less likely, threshold is not measured in message number, some messages are worth 4 and will immediately surpass the threshold as they are rather unlikely to be noise.)
+# -t <timeout>               Aircraft timeout in seconds for the whitelist (default: 60)
 #-b: enable bias-t (50 mA max according to specification, using it to power the rtl-sdr LNA is not recommended as the unit will run too hot)
 
-OPTIONS= -v -f 1
+OPTIONS= -v -t 60 -f 1 -w 5 -e 5 -E 10 -C 50
 
 # please always check the following command for the options used by the current version:
 # airspy_adsb -h

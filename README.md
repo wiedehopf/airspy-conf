@@ -1,7 +1,5 @@
 # airspy-conf
 
-On popular request i've written a script that does all the work, so all you need to do is change the gain if you want :)
-
 This script changes the piaware configuration, dump1090-fa / readsb configuration and installs a systemd-service to automatically run airspy_adsb.
 I have tested the script locally, it should work. But such things sometimes don't work as intended, keep that in mind.
 
@@ -29,6 +27,8 @@ Content:
 
 ## Installation
 
+Overwrites the configuration at /etc/default/airspy_adsb
+
 ```shell
 sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/install.sh)"
 ```
@@ -39,14 +39,14 @@ In case you're an advanced user and don't want dump1090-fa / readsb to be re-con
 sudo bash install.sh only-airspy
 ```
 
+## Update
 
----
+Update / download airspy_adsb to /usr/local/bin while preserving options in /etc/default/airspy_adsb
 
-## Other feeders
+```shell
+sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/update-binary.sh)"
+```
 
-While dump1090-fa can be used for this script and configuration to work, you don't have to install piaware.
-It should work fine with all the common feeders (fr24, planefinder, ...).
-Just point them to port 30005 (beast protocol).
 
 ---
 
@@ -65,7 +65,7 @@ For example you might want to enable the bias tee, just add `-b` at the end of t
 OPTIONS= -f 1 -x -p -b
 ```
 
-There are other lines where you can change the gain or sample rate:
+Don't use -g / -m in the OPTIONS line, use the GAIN / SAMPLE_RATE lines for those settings and only provide the number.
 
 ```shell
 #gain is 0 to 21, each step of gain is equivalent to about 3dB, so reduce in increments of 1 if 21 is too high
@@ -95,6 +95,8 @@ If you have questions it is best to just post in that thread!
 sudo journalctl -u airspy_adsb | tail -n60
 # scroll the last 2000 lines
 sudo journalctl -u airspy_adsb -e -n2000
+# update the log live (interrupt with Ctrl-C)
+sudo journalctl -u airspy_adsb -ef
 ```
 
 ## Uninstall
@@ -107,12 +109,7 @@ sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-con
 
 ---
 
-## Update
+## Other feeders
 
-Update / download airspy_adsb to /usr/local/bin while preserving options in /etc/default/airspy_adsb
-
-```shell
-sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/update-binary.sh)"
-```
-
----
+It should work fine with all the common feeders (fr24, planefinder, ...).
+Just point them to port 30005 (beast protocol).

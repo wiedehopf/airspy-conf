@@ -11,10 +11,15 @@ fi
 
 systemctl disable airspy_adsb
 systemctl stop airspy_adsb
-systemctl restart piaware dump1090-fa
+systemctl restart --no-block piaware || true
+systemctl restart --no-block dump1090-fa || true
+systemctl restart --no-block readsb || true
 
 if [ -f /boot/piaware-config.txt ]; then
     piaware-config receiver-type ""
     piaware-config receiver-host "127.0.0.1"
     piaware-config receiver-port "30005"
 fi
+
+echo "------------------------"
+echo "airspy-conf uninstall finished successfully!"

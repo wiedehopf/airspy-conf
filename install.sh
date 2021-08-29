@@ -77,6 +77,9 @@ if [[ -f /boot/piaware-config.txt ]] && { piaware-config -show manage-config | g
 	piaware-config receiver-type relay
 	piaware-config receiver-host localhost
 	piaware-config receiver-port 47787
+    systemctl restart piaware &>/dev/null || true
+    systemctl restart dump1090-fa &>/dev/null || true
+    systemctl restart beast-splitter &>/dev/null || true
 else
 	if ! command -v dump1090-fa &>/dev/null && ! command -v readsb &>/dev/null; then
         echo "Please install readsb or dump1090-fa before installing airspy-conf!"
@@ -86,16 +89,7 @@ else
 	fi
 
 	#configure dump1090-fa / readsb
-	if command -v dump1090-fa &>/dev/null; then
-		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
-		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
-		cp -n /etc/default/dump1090-fa /etc/default/dump1090-fa.airspyconf
-		wget -q -O /etc/default/dump1090-fa $repository/dump1090-fa.default
-		if [ -n "$LAT" ] && [ -n "$LON" ]; then
-			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/dump1090-fa
-		fi
-    fi
-	if command -v readsb &>/dev/null; then
+	if systemctl is-enabled readsb &>/dev/null; then
 		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/readsb | head -n1)
 		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/readsb | head -n1)
 		cp -n /etc/default/readsb /etc/default/readsb.airspyconf
@@ -103,21 +97,18 @@ else
 		if [ -n "$LAT" ] && [ -n "$LON" ]; then
 			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/readsb
 		fi
-	fi
+        systemctl restart readsb &>/dev/null || true
+	elif systemctl is-enabled dump1090-fa &>/dev/null; then
+		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
+		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
+		cp -n /etc/default/dump1090-fa /etc/default/dump1090-fa.airspyconf
+		wget -q -O /etc/default/dump1090-fa $repository/dump1090-fa.default
+		if [ -n "$LAT" ] && [ -n "$LON" ]; then
+			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/dump1090-fa
+		fi
+        systemctl restart dump1090-fa &>/dev/null || true
+    fi
 fi
-
-#restart relevant services
-systemctl daemon-reload
-systemctl kill -s 9 dump1090-fa &>/dev/null || true
-systemctl kill -s 9 readsb &>/dev/null || true
-sleep .1
-systemctl restart piaware &>/dev/null || true
-sleep .1
-systemctl restart dump1090-fa &>/dev/null || true
-systemctl restart readsb &>/dev/null || true
-sleep .1
-systemctl restart beast-splitter &>/dev/null || true
-
 
 echo "------------------------"
 echo "airspy-conf install finished successfully!"

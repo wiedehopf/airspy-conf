@@ -90,20 +90,20 @@ else
 	fi
 
 	#configure dump1090-fa / readsb
-	if systemctl is-enabled readsb &>/dev/null; then
+	if systemctl is-enabled readsb &>/dev/null && ! grep -qs -e '--net-only' /etc/default/readsb; then
 		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/readsb | head -n1)
 		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/readsb | head -n1)
-		cp -n /etc/default/readsb /etc/default/readsb.airspyconf
-		wget -q -O /etc/default/readsb $repository/readsb.default
-		if [ -n "$LAT" ] && [ -n "$LON" ]; then
-			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/readsb
-		fi
+        cp -n /etc/default/readsb /etc/default/readsb.airspyconf
+        wget -q -O /etc/default/readsb $repository/readsb.default
+        if [ -n "$LAT" ] && [ -n "$LON" ]; then
+            sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/readsb
+        fi
         systemctl restart readsb &>/dev/null || true
-	elif systemctl is-enabled dump1090-fa &>/dev/null; then
+	elif systemctl is-enabled dump1090-fa &>/dev/null && ! grep -qs -e '--net-only' /etc/default/dump1090-fa; then
 		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
 		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
 		cp -n /etc/default/dump1090-fa /etc/default/dump1090-fa.airspyconf
-		wget -q -O /etc/default/dump1090-fa $repository/dump1090-fa.default
+            wget -q -O /etc/default/dump1090-fa $repository/dump1090-fa.default
 		if [ -n "$LAT" ] && [ -n "$LON" ]; then
 			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/dump1090-fa
 		fi

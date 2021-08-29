@@ -73,7 +73,8 @@ if [[ -f /boot/piaware-config.txt ]] && { piaware-config -show manage-config | g
 	#sed -i -e 's@beast - radarcape - relay - other@# added by airspy\n\t\tother {\n\t\t\tlappend receiverOpts "--net-only" "--net-bo-port 30005" "--fix"\n\t\t}\n\n\t\tbeast - radarcape - relay@' /usr/lib/piaware-support/generate-receiver-config
 	#piaware version > 3.7
 	#sed -i -e 's@none - other@# added by airspy\n\t\tother {\n\t\t\tlappend receiverOpts "--net-only" "--net-bo-port 30005" "--fix"\n\t\t}\n\n\t\tnone@' /usr/lib/piaware-support/generate-receiver-config
-	sed -i 's/ -c localhost:30004:beast//' /etc/default/airspy_adsb
+    sed -i 's/ -c localhost:30004:beast//' /etc/default/airspy_adsb
+    systemctl restart airspy_adsb
 	piaware-config receiver-type relay
 	piaware-config receiver-host localhost
 	piaware-config receiver-port 47787

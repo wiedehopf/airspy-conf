@@ -36,7 +36,7 @@ if ! ./airspy_adsb -h &>/dev/null; then
     echo "Seems your system is a bit old, performance may be worse than on buster or newer!"
     echo "----------------"
     OS="stretch"
-    binary="${URL1}/${OS}/airspy_adsb-linux-${ARCH}.tgz"
+    binary="${URL}/${OS}/airspy_adsb-linux-${ARCH}.tgz"
     download
     if ! ./airspy_adsb -h; then
         echo "Error, can't execute the binary, please report $(uname -m) and the above error."

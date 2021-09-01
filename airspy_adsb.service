@@ -6,8 +6,6 @@ Documentation=https://discussions.flightaware.com/t/howto-airspy-mini-piaware-du
 [Service]
 EnvironmentFile=/etc/default/airspy_adsb
 ExecStart=/usr/bin/taskset -c $AFFINITY /usr/local/bin/airspy_adsb $OPTIONS $NET $G $GAIN $M $SAMPLE_RATE
-StandardOutput=syslog
-StandardError=syslog
 SyslogIdentifier=airspy_adsb
 User=root
 Group=root

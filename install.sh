@@ -100,13 +100,18 @@ else
         fi
         systemctl restart readsb &>/dev/null || true
 	elif systemctl is-enabled dump1090-fa &>/dev/null && ! grep -qs -e '--net-only' /etc/default/dump1090-fa; then
-		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
-		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
 		cp -n /etc/default/dump1090-fa /etc/default/dump1090-fa.airspyconf
+        if grep -qs /etc/default/dump1090-fa -e 'CONFIG_STYLE.*6'; then
+            sed -i -e 's/RECEIVER.*/RECEIVER=none/' /etc/default/dump1090-fa
+            sed -i -e 's/MAX_RANGE=360/MAX_RANGE=500/' /etc/default/dump1090-fa
+        else
+            LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
+            LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/dump1090-fa | head -n1)
             wget -q -O /etc/default/dump1090-fa $repository/dump1090-fa.default
-		if [ -n "$LAT" ] && [ -n "$LON" ]; then
-			sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/dump1090-fa
-		fi
+            if [ -n "$LAT" ] && [ -n "$LON" ]; then
+                sed -i "s/DECODER_OPTIONS=\"/DECODER_OPTIONS=\"$LAT $LON /" /etc/default/dump1090-fa
+            fi
+        fi
         systemctl restart dump1090-fa &>/dev/null || true
     fi
 fi

@@ -113,3 +113,36 @@ sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-con
 
 It should work fine with all the common feeders (fr24, planefinder, ...).
 Just point them to port 30005 (beast protocol).
+
+
+----
+
+## Install the scripts in this repository / clone airspy-conf:
+
+```
+wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/clone-airspy-conf.sh | sudo bash
+```
+
+### First record a sample:
+
+```
+sudo /usr/local/share/airspy-conf/airspy_record_sample.sh <sample_rate MHz> <gain> <raw_size_MB>
+# example command for 12 MHz, gain of 17 and a file size of 500 MB (automatically capped by the amount of memory you have free)
+sudo /usr/local/share/airspy-conf/airspy_record_sample.sh 12 17 500
+```
+
+This will use RAM / memory until you remove it or reboot the system.
+Removing it:
+```
+sudo rm /media/airspy_sample/sample.bin
+```
+
+### Check -B bandwidth setting:
+
+```
+/usr/local/share/airspy-conf/airspy_check_narrow.sh <sample_rate MHz>
+# for example
+/usr/local/share/airspy-conf/airspy_check_narrow.sh 12
+```
+DF17 messages contain positions and are reliable, so usually whichever setting gives more of those is what you want.
+Up to you to decide.

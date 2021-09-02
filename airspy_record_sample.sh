@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function usage() {
-	echo "sudo /usr/local/share/airspy-conf/airspy_upload_sample.sh <name> <sample_rate MHz> <gain> <raw_size_MB>"
+	echo "sudo /usr/local/share/airspy-conf/airspy_record_sample.sh <sample_rate MHz> <gain> <raw_size_MB>"
 	exit 1
 }
 
@@ -13,21 +13,16 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 if ! command -v airspy_rx &>/dev/null || ! command -v curl &>/dev/null; then
-	echo please: sudo apt install airspy curl -y
+	echo please: sudo apt install airspy -y
 	exit 1
 fi
 
-name=$1
-if [[ -z $name ]]; then
-	echo no name given
-	usage
-fi
-rate=$2
+rate=$1
 if [[ $rate != 12 ]] && [[ $rate != 20 ]] && [[ $rate != 24 ]]; then
 	echo choose 12, 20, or 24 as a rate to use
 	usage
 fi
-gain=$3
+gain=$2
 if ! (( gain < 22 )) && ! (( gain > 0 )); then
 	echo invalid gain
 	usage
@@ -47,8 +42,8 @@ if [[ -z $mem ]] || (( mem < 500 )); then
 fi
 mem=$((mem - 100))
 
-if [[ -n $4 ]] && ((mem > $4)); then
-    mem=$4
+if [[ -n $3 ]] && ((mem > $3)); then
+    mem=$3
 fi
 
 
@@ -72,16 +67,8 @@ echo ---------
 echo Starting airspy_adsb, your station will resume reception!
 systemctl --no-block restart airspy_adsb
 echo
-echo Compressing / uploading file, this might take a bit!
-echo -----------
-
-file=/tmp/sample_$rate_$gain.bin.gz
-URL="https://transfer.sh/${name}_r${rate}_g${gain}_$(date -u +%Y-%m-%d_%H-%M).bin.gz"
-gzip -3 -c $temp | curl -H "Max-Days: 1" --upload-file "-" "$URL" | tee /dev/null
-rm -rf $temp
-
-echo
-echo -----------
-echo "Please give the above URL to whoever requested the sample! :)"
-echo -----------
-
+echo ---------
+echo "Sample has been save here: $temp"
+echo "You can run decoding tests on it using the airspy_adsb -F option."
+echo "Example command:"
+echo "airspy_adsb -v -F /media/airspy_sample/sample.bin -f 1 -w 5 -e 20 -m ${rate}"

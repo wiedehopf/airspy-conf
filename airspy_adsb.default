@@ -15,8 +15,9 @@ GAIN= 21
 #-w <whitelist_threshold>   Whitelist threshold: 1..10 (default: 3, lower not recommended due to bogus messages, increase to make bogus 1 message planes even less likely, threshold is not measured in message number, some messages are worth 4 and will immediately surpass the threshold as they are rather unlikely to be noise.)
 # -t <timeout>               Aircraft timeout in seconds for the whitelist (default: 60)
 #-b: enable bias-t (50 mA max according to specification, using it to power the rtl-sdr LNA is not recommended as the unit will run too hot)
+#-B <bandwidth>             Digital Filter Bandwidth: narrow, wide (default: wide)
 
-OPTIONS= -v -t 60 -f 1 -w 5 -e 5 -E 10 -C 50
+OPTIONS= -v -t 60 -f 1 -w 5 -e 5 -E 15 -C 75
 
 # please always check the following command for the options used by the current version:
 # airspy_adsb -h

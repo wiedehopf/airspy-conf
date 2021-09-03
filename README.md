@@ -117,13 +117,14 @@ Just point them to port 30005 (beast protocol).
 
 ----
 
-## Install the scripts in this repository / clone airspy-conf:
+# Helper scripts for recording samples / testing settings
 
+### Install the helper scripts:
 ```
 wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/clone-airspy-conf.sh | sudo bash
 ```
 
-### First record a sample:
+### Record a sample:
 
 ```
 sudo /usr/local/share/airspy-conf/airspy_record_sample.sh <sample_rate MHz> <gain> <raw_size_MB>

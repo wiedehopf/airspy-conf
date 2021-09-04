@@ -46,6 +46,9 @@ if [[ -n $3 ]] && ((mem > $3)); then
     mem=$3
 fi
 
+if [[ $4 == bias ]]; then
+    bias="-b1"
+fi
 
 mount -t tmpfs -o size=$(( mem + 50))m tmpfs $dir
 
@@ -61,7 +64,7 @@ echo ---------
 echo Stopping airspy_adsb, recording $seconds seconds
 echo ---------
 set -x
-timeout $seconds airspy_rx -r $temp -t 4 -a "${rate}000000" -f 1090 -g $gain $packing || true
+timeout $seconds airspy_rx -r $temp -t 4 -a "${rate}000000" -f 1090 -g $gain $packing $bias || true
 set +x
 echo ---------
 echo Starting airspy_adsb, your station will resume reception!

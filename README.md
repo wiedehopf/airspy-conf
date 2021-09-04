@@ -127,9 +127,11 @@ wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/clone-a
 ### Record a sample:
 
 ```
-sudo /usr/local/share/airspy-conf/airspy_record_sample.sh <sample_rate MHz> <gain> <raw_size_MB>
+sudo /usr/local/share/airspy-conf/airspy_record_sample.sh <sample_rate MHz> <gain> <raw_size_MB> <bias>
 # example command for 12 MHz, gain of 17 and a file size of 500 MB (automatically capped by the amount of memory you have free)
 sudo /usr/local/share/airspy-conf/airspy_record_sample.sh 12 17 500
+# with bias-tee enabled:
+sudo /usr/local/share/airspy-conf/airspy_record_sample.sh 12 17 500 bias
 ```
 
 This will use RAM / memory until you remove it or reboot the system.

@@ -119,19 +119,20 @@ Just point them to port 30005 (beast protocol).
 
 # Helper scripts for recording samples / testing settings
 
-### Install the helper scripts:
+### Install / update the helper scripts:
 ```
 wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/clone-airspy-conf.sh | sudo bash
 ```
 
 ### Record a sample:
+Caution: this script was changed to seconds instead of filesize, if you have an old version update first.
 
 ```
-sudo /usr/local/share/airspy-conf/airspy_record_sample.sh <sample_rate MHz> <gain> <raw_size_MB> <bias>
-# example command for 12 MHz, gain of 17 and a file size of 500 MB (automatically capped by the amount of memory you have free)
-sudo /usr/local/share/airspy-conf/airspy_record_sample.sh 12 17 500
+sudo /usr/local/share/airspy-conf/airspy_record_sample.sh <sample_rate MHz> <gain> <seconds> <bias>
+# example command for 12 MHz, gain of 17 and a file size of 15 seconds (automatically capped by the amount of memory you have free)
+sudo /usr/local/share/airspy-conf/airspy_record_sample.sh 12 17 15
 # with bias-tee enabled:
-sudo /usr/local/share/airspy-conf/airspy_record_sample.sh 12 17 500 bias
+sudo /usr/local/share/airspy-conf/airspy_record_sample.sh 12 17 15 bias
 ```
 
 This will use RAM / memory until you remove it or reboot the system.

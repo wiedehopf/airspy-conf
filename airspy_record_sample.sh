@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function usage() {
-	echo "sudo /usr/local/share/airspy-conf/airspy_record_sample.sh <sample_rate MHz> <gain> <raw_size_MB>"
+	echo "sudo /usr/local/share/airspy-conf/airspy_record_sample.sh <sample_rate MHz> <gain> <seconds>"
 	exit 1
 }
 
@@ -34,23 +34,41 @@ temp=$dir/sample.bin
 
 rm -rf $temp
 
-mem=$(free -m | grep Mem: | awk '{ print $7 }')
+free_mem=$(free -m | grep Mem: | awk '{ print $7 }')
 
-if [[ -z $mem ]] || (( mem < 500 )); then
-	echo "not enough memory available"
+if [[ -z $free_mem ]]; then
+	echo "FATAL: could not detemine free memory"
 	exit 1
 fi
-mem=$((mem - 100))
+if (( free_mem < 100 )); then
+	echo "FATAL: Less than 100 MB of memory is free, this isn't sufficient"
+	exit 1
+fi
 
-if [[ -n $3 ]] && ((mem > $3)); then
-    mem=$3
+mount -t tmpfs -o size=$((free_mem - 50))m tmpfs $dir
+usable_mem=$((free_mem - 100))
+
+if [[ -n $3 ]]; then
+    seconds=$3
+    requested_mem=$(awk "BEGIN{ print $seconds * (1.905 * $rate); }")
+    rounded_mem=$(awk "BEGIN{ print int($requested_mem); }")
+    echo ---------
+    if ((rounded_mem > usable_mem)); then
+        echo "Requested $seconds seconds, but that would take $requested_mem MB of memory and only $usable_mem MB is available!"
+        mem=$usable_mem
+    else
+        echo "Requested $seconds seconds, file size will be $requested_mem MB."
+        mem=$usable_mem
+        mem=$requested_mem
+    fi
+    echo ---------
+else
+    mem=$usable_mem
 fi
 
 if [[ $4 == bias ]]; then
     bias="-b1"
 fi
-
-mount -t tmpfs -o size=$(( mem + 50))m tmpfs $dir
 
 seconds=$(awk "BEGIN{ print $mem / (1.905 * $rate); }")
 

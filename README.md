@@ -89,6 +89,11 @@ https://discussions.flightaware.com/t/howto-airspy-mini-and-airspy-r2-piaware-du
 
 If you have questions it is best to just post in that thread!
 
+## Choosing the proper gain:
+
+- In RMS mode (the default), start with the minimum gain and keep increasing and stop just before the strongest AC hit 0 dBFS or you no longer see AC near the -45 dBFS zone.
+- In SNR mode, start with the minimum gain and keep increasing until the SNR (displayed as RSSI) no longer improves, then, step it back.
+
 ## Show the log, please show that in case of issues:
 ```shell
 # last 60 lines:

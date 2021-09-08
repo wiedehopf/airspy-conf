@@ -1,20 +1,26 @@
+# airspy_adsb systemd service
 
 [Unit]
 Description=Airspy ADS-B receiver
 Documentation=https://discussions.flightaware.com/t/howto-airspy-mini-piaware-dump1090-fa-configuration/44343
 
 [Service]
+
 EnvironmentFile=/etc/default/airspy_adsb
-ExecStart=/usr/bin/taskset -c $AFFINITY /usr/local/bin/airspy_adsb $OPTIONS $NET $G $GAIN $M $SAMPLE_RATE
+ExecStart=/usr/bin/taskset -c $AFFINITY /usr/local/bin/airspy_adsb $OPTIONS $NET $G $GAIN $M $SAMPLE_RATE $STATS
+
 SyslogIdentifier=airspy_adsb
 User=root
-Group=root
-Environment=NODE_ENV=production
+
 Nice=-19
+
 Restart=always
-RestartSec=30
+RestartSec=15
 StartLimitInterval=1
 StartLimitBurst=100
+
+RuntimeDirectory=airspy_adsb
+RuntimeDirectoryMode=0755
 
 
 [Install]

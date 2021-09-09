@@ -147,11 +147,4 @@ sudo rm /media/airspy_sample/sample.bin
 ```
 
 ### Check -B bandwidth setting:
-
-```
-/usr/local/share/airspy-conf/airspy_check_narrow.sh <sample_rate MHz>
-# for example
-/usr/local/share/airspy-conf/airspy_check_narrow.sh 12
-```
-DF17 messages contain positions and are reliable, so usually whichever setting gives more of those is what you want.
-Up to you to decide.
+This setting no longer has any effect.

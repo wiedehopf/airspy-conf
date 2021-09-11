@@ -1,14 +1,12 @@
-
+#
 #gain is 0 to 21, each step of gain is equivalent to about 3dB, so reduce in increments of 1 if 21 is too high
-GAIN= 19
-# In RMS mode (the default), start with the minimum gain and keep increasing and stop just before the strongest AC hit 0 dBFS or you no longer see AC near the -45 dBFS zone.
-# In SNR mode, start with the minimum gain and keep increasing until the SNR (displayed as RSSI) no longer improves, then, step it back.
+GAIN= auto
 
 #other options, append or remove from the line starting with OPTIONS=
 #-f: error correction bits, 0, 1 or 2: default and recommended is 1 for now.
 #    (-f 2 is not recommended at the moment when feeding FlightAware and maybe others
 #    as they have expressed concern about 2 bit error correction)
-#-v: leave it on, will provide messages to system log, read with sudo journalctl -u airspy_adsb
+#-v: verbose, will provide messages to system log, read with this command: sudo journalctl -u airspy_adsb
 #-x: dx mode, introduces bogus messages, improves reception of weak messages (opinion: not worth it)
 #-p: bit packing, reduces USB bandwidth but slightly increases CPU load. Not recommended in most cases.
 #-e: preamble filter sensitivity, values: 0.1 to 30.0 (higher values increase CPU load and can improve detection)

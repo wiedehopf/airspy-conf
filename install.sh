@@ -90,7 +90,10 @@ else
 	fi
 
 	#configure dump1090-fa / readsb
-	if systemctl is-enabled readsb &>/dev/null && ! grep -qs -e '--net-only' /etc/default/readsb; then
+	if [[ -f /boot/adsbx-env ]]; then
+        sed -i -e 's/^RECEIVER_OPTIONS=.*/RECEIVER_OPTIONS="--net-only"/' /boot/adsbx-env
+        systemctl restart readsb &>/dev/null || true
+	elif systemctl is-enabled readsb &>/dev/null && ! grep -qs -e '--net-only' /etc/default/readsb; then
 		LAT=$(grep -o -e '--lat [0-9]*\.[0-9]*' /etc/default/readsb | head -n1)
 		LON=$(grep -o -e '--lon [0-9]*\.[0-9]*' /etc/default/readsb | head -n1)
         cp -n /etc/default/readsb /etc/default/readsb.airspyconf

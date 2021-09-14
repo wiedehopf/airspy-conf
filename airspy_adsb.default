@@ -29,7 +29,7 @@ SAMPLE_RATE= 12
 # If MLAT isn't stable, 12 is the better choice and performance is similar in most cases.
 
 #network settings
-NET= -l 47787:beast -c localhost:30004:beast
+NET= -l 47787:beast -c 127.0.0.1:30004:beast
 
 # stats.json
 STATS= -S /run/airspy_adsb/stats.json

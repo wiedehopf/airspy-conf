@@ -7,7 +7,7 @@ GAIN= auto
 #-C: CPU target percentage: 5 to 95 (adjusts preamble filter while running to target CPU load)
 #-E <max_preamble_filter>   Maximum preamble filter when using CPU target 0..30 (default: 30)
 #-P <non_crc_preamble_filter> non-CRC Preamble filter: 1..preamble_filter (default: disabled)
-#-P 5, -P 3 or -P 1 can help when running higher -e or -C and encountering wrong altitudes or planes showing ground in VRS
+#a low setting (8 or less) for -P can help when running higher -e or -C and encountering wrong altitudes or planes showing ground in VRS
 #note this will reduce the number of messages without CRC, for example altitude of MLAT aircraft but also reduce CPU to focus on ADS-B position messages
 #
 #-w <whitelist_threshold>   Whitelist threshold: 1..10 (default: 3, lower not recommended due to bogus messages, increase to make bogus 1 message planes even less likely, threshold is not measured in message number, some messages are worth 4 and will immediately surpass the threshold as they are rather unlikely to be noise.)
@@ -22,7 +22,7 @@ GAIN= auto
 #-x: dx mode, introduces bogus messages, improves reception of weak messages (opinion: not worth it)
 #-p: bit packing, reduces USB bandwidth but slightly increases CPU load. Not recommended in most cases.
 
-OPTIONS= -v -t 60 -f 1 -w 5 -e 5 -E 30 -C 75
+OPTIONS= -v -t 180 -f 1 -w 5 -P 8 -e 5 -C 75
 
 # please always check the following command for the options used by the current version:
 # airspy_adsb -h

@@ -62,7 +62,7 @@ For example you might want to enable the bias tee, just add `-b` at the end of t
 
 ```shell
 #other options
-OPTIONS= -f 1 -x -p -b
+OPTIONS= -v -f 1 -w 5 -C 80 -b
 ```
 
 Don't use -g / -m in the OPTIONS line, use the GAIN / SAMPLE_RATE lines for those settings and only provide the number.

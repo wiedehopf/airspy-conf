@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function usage() {
-	echo "sudo /usr/local/share/airspy-conf/airspy_upload_sample.sh <name> <sample_rate MHz> <gain> <raw_size_MB>"
+	echo 'sudo /usr/local/share/airspy-conf/airspy_upload_sample.sh <name> <sample_rate MHz> <gain> <raw_size_MB> <"bias" or empty>'
 	exit 1
 }
 
@@ -31,6 +31,10 @@ gain=$3
 if ! (( gain < 22 )) && ! (( gain > 0 )); then
 	echo invalid gain
 	usage
+fi
+
+if [[ $5 == bias ]]; then
+    bias="-b1"
 fi
 
 dir=/media/airspy_sample
@@ -66,7 +70,7 @@ echo ---------
 echo Stopping airspy_adsb, recording $seconds seconds
 echo ---------
 set -x
-timeout $seconds airspy_rx -r $temp -t 4 -a "${rate}000000" -f 1090 -g $gain $packing || true
+timeout $seconds airspy_rx -r $temp -t 4 -a "${rate}000000" -f 1090 -g $gain $packing $bias || true
 set +x
 echo ---------
 echo Starting airspy_adsb, your station will resume reception!

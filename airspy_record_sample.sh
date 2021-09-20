@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function usage() {
-	echo "sudo /usr/local/share/airspy-conf/airspy_record_sample.sh <sample_rate MHz> <gain> <seconds>"
+	echo 'sudo /usr/local/share/airspy-conf/airspy_record_sample.sh <sample_rate MHz> <gain> <seconds> <"bias" or empty>'
 	exit 1
 }
 

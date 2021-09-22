@@ -9,7 +9,7 @@ if [[ -z $gain ]] || (( $gain < 0 )) || (( $gain > 21)); then
 fi
 
 if ! grep -qs /etc/default/airspy_adsb -e '^GAIN'; then
-    echo "Config file /etc/default/airspy_adsb is not int he expected format, rerun the airspy-conf install script please."
+    echo "Config file /etc/default/airspy_adsb is not in the expected format, rerun the airspy-conf install script please."
     exit 1
 fi
 
@@ -29,4 +29,4 @@ fi
 
 sleep 0.5
 
-journalctl _SYSTEMD_INVOCATION_ID=$(systemctl show -p InvocationID --value airspy_adsb)
+journalctl _SYSTEMD_INVOCATION_ID=$(systemctl show -p InvocationID --value airspy_adsb) | grep "Decoding started"

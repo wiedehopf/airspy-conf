@@ -4,9 +4,10 @@ GAIN= auto
 
 #other options, append or remove from the line starting with OPTIONS=
 
-OPTIONS= -v -t 90 -f 1 -w 5 -P 8 -C 75 -E 20
+OPTIONS= -v -t 90 -f 1 -w 5 -P 8 -C 60 -E 20
 
-#-C: CPU target percentage: 5 to 95 (adjust preamble filter while running to target CPU load)
+#-C: CPU target in time percentage: 5 to 95 (adjust preamble filter while running to target CPU load)
+#    a CPU target of 50 will use around 1 core completely on a multi-core system
 #-e: preamble filter sensitivity, values: 1.0 to 60.0 (higher values increase CPU load and can improve detection)
 #
 #-E <max_preamble_filter>   Maximum preamble filter when using CPU target 0..60 (default: 60)

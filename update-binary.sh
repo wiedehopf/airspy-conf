@@ -2,6 +2,15 @@
 # Update airspy_adsb binary
 set -e
 
+verlte() {
+    [  "$1" = "$(echo -e "$1\n$2" | sort -V | head -n1)" ]
+}
+verlt() {
+    [ "$1" = "$2" ] && return 1 || verlte $1 $2
+}
+
+libc=$(ldconfig -v 2>/dev/null | grep libc-2 | tail -n1 | cut -d'>' -f2)
+
 ARCH=arm
 if dpkg --print-architecture | grep -F -e armhf &>/dev/null; then
     ARCH=arm
@@ -18,6 +27,19 @@ else
 	echo "Unable to download a program version for your platform!"
 fi
 
+
+URL="https://github.com/wiedehopf/airspy-conf/raw/master"
+
+OS="buster"
+if verlt "$libc" "libc-2.28.so"; then
+    OS="stretch"
+    echo "----------------"
+    echo "Seems your system is a bit old, performance may be worse than on buster or newer!"
+    echo "----------------"
+fi
+
+binary="${URL}/${OS}/airspy_adsb-linux-${ARCH}.tgz"
+
 function download() {
     cd /tmp/
     if ! wget -O airspy.tgz "$binary"; then
@@ -28,24 +50,15 @@ function download() {
     tar xzf airspy.tgz
 }
 
-URL="https://github.com/wiedehopf/airspy-conf/raw/master"
-OS="buster"
-binary="${URL}/${OS}/airspy_adsb-linux-${ARCH}.tgz"
-
 download
 
 if ! ./airspy_adsb -h &>/dev/null; then
-    echo "----------------"
-    echo "Seems your system is a bit old, performance may be worse than on buster or newer!"
-    echo "----------------"
-    OS="stretch"
-    binary="${URL}/${OS}/airspy_adsb-linux-${ARCH}.tgz"
-    download
-    if ! ./airspy_adsb -h; then
-        echo "ARCH=${ARCH} Error, can't execute the binary, please report $(uname -m) and the above error."
-        exit 1
-    fi
+    echo "ARCH=${ARCH} libc=${libc} Error, can't execute the binary, please report $(uname -m) and the above error."
+    exit 1
 fi
+
+
+# ------------------------------
 
 systemctl stop airspy_adsb &>/dev/null || true
 cp -f airspy_adsb /usr/local/bin/

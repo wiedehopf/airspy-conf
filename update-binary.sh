@@ -9,7 +9,7 @@ verlt() {
     [ "$1" = "$2" ] && return 1 || verlte $1 $2
 }
 
-libc=$(ldconfig -v 2>/dev/null | grep libc-2 | tail -n1 | cut -d'>' -f2)
+libc=$(ldconfig -v 2>/dev/null | grep libc-2 | tail -n1 | cut -d'>' -f2 | tr -d " ")
 
 ARCH=arm
 if dpkg --print-architecture | grep -F -e armhf &>/dev/null; then
@@ -31,10 +31,12 @@ fi
 URL="https://github.com/wiedehopf/airspy-conf/raw/master"
 
 OS="buster"
+required_libc="libc-2.28.so"
 if verlt "$libc" "libc-2.28.so"; then
     OS="stretch"
     echo "----------------"
     echo "Seems your system is a bit old, performance may be worse than on buster or newer!"
+    echo "$libc <= $required_libc"
     echo "----------------"
 fi
 

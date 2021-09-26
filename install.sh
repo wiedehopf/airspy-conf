@@ -13,6 +13,9 @@ elif uname -m | grep -F -e arm &>/dev/null; then
     ARCH=arm
 elif uname -m | grep -F -e x86_64 &>/dev/null; then
     ARCH=x86_64
+    if cat /proc/cpuinfo | grep flags | grep popcnt | grep sse4_2 &>/dev/null; then
+        ARCH=nehalem
+    fi
 else
 	echo "Unable to download a program version for your platform!"
 fi
@@ -41,7 +44,7 @@ if ! ./airspy_adsb -h &>/dev/null; then
     binary="${URL}/${OS}/airspy_adsb-linux-${ARCH}.tgz"
     download
     if ! ./airspy_adsb -h; then
-        echo "Error, can't execute the binary, please report $(uname -m) and the above error."
+        echo "ARCH=${ARCH} Error, can't execute the binary, please report $(uname -m) and the above error."
         exit 1
     fi
 fi

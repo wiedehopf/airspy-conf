@@ -9,7 +9,7 @@ verlt() {
     [ "$1" = "$2" ] && return 1 || verlte $1 $2
 }
 
-libc=$(ldconfig -v 2>/dev/null | grep libc-2 | tail -n1 | cut -d'>' -f2)
+libc=$(ldconfig -v 2>/dev/null | grep libc-2 | tail -n1 | cut -d'>' -f2 | tr -d " ")
 
 ARCH=arm
 if dpkg --print-architecture | grep -F -e armhf &>/dev/null; then
@@ -18,6 +18,8 @@ elif uname -m | grep -F -e arm64 -e aarch64 &>/dev/null; then
     ARCH=arm64
 elif uname -m | grep -F -e arm &>/dev/null; then
     ARCH=arm
+elif dpkg --print-architecture | grep -F -e i386 &>/dev/null; then
+    ARCH=i386
 elif uname -m | grep -F -e x86_64 &>/dev/null; then
     ARCH=x86_64
     if cat /proc/cpuinfo | grep flags | grep popcnt | grep sse4_2 &>/dev/null; then

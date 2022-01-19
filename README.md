@@ -33,6 +33,11 @@ Overwrites the configuration at /etc/default/airspy_adsb
 sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-conf/master/install.sh)"
 ```
 
+Check that it's running by looking at the log:
+```
+sudo journalctl -e -u airspy_adsb
+```
+
 In case you're an advanced user and don't want dump1090-fa / readsb to be re-configured for some reason, you can download the script and run it like this:
 
 ```shell

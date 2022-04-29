@@ -15,6 +15,10 @@ if [ -f /boot/piaware-config.txt ]; then
     piaware-config receiver-port "30005"
 fi
 
+if [[ -f /boot/adsbx-env ]]; then
+    sed -i -e 's/^RECEIVER_OPTIONS=.*/RECEIVER_OPTIONS="--device-type rtlsdr"/' /boot/adsbx-env
+fi
+
 systemctl disable airspy_adsb
 systemctl stop airspy_adsb
 systemctl is-enabled piaware &>/dev/null && systemctl restart --no-block piaware || true

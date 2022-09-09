@@ -1,6 +1,7 @@
 #!/bin/bash
 # Update airspy_adsb binary
 set -e
+trap 'echo "[ERROR] Error in line $LINENO when executing: $BASH_COMMAND"' ERR
 
 verlte() {
     [  "$1" = "$(echo -e "$1\n$2" | sort -V | head -n1)" ]
@@ -38,15 +39,21 @@ if [[ -z "$libc" ]] || verlt "$libc" "$required_libc"; then
     OS="stretch"
     echo "----------------"
     echo "Seems your system is a bit old, performance may be worse than on buster or newer!"
-    echo "$libc <= $required_libc"
+    echo "$libc < $required_libc"
+    echo "----------------"
+else
+    echo "----------------"
+    echo "$libc >= $required_libc"
     echo "----------------"
 fi
 
 binary="${URL}/${OS}/airspy_adsb-linux-${ARCH}.tgz"
 
+echo "Getting this binary: $binary"
+
 function download() {
     cd /tmp/
-    if ! wget -O airspy.tgz "$binary"; then
+    if ! wget -nv -O airspy.tgz "$binary"; then
         echo "download error?!"
         exit 1
     fi

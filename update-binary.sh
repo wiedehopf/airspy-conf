@@ -34,7 +34,7 @@ URL="https://github.com/wiedehopf/airspy-conf/raw/master"
 
 OS="buster"
 required_libc="libc-2.28.so"
-if verlt "$libc" "libc-2.28.so"; then
+if [[ -z "$libc" ]] || verlt "$libc" "$required_libc"; then
     OS="stretch"
     echo "----------------"
     echo "Seems your system is a bit old, performance may be worse than on buster or newer!"

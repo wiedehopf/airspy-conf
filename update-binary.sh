@@ -35,7 +35,11 @@ URL="https://github.com/wiedehopf/airspy-conf/raw/master"
 
 OS="buster"
 required_libc="libc-2.28.so"
-if [[ -z "$libc" ]] || verlt "$libc" "$required_libc"; then
+if uname -m | grep -qs armv7; then
+    OS="buster"
+    ARCH=armv7
+    echo "avm7l special case only buster (libc-2.28) and later, found libc version: $libc"
+elif [[ -z "$libc" ]] || verlt "$libc" "$required_libc"; then
     OS="stretch"
     echo "----------------"
     echo "Seems your system is a bit old, performance may be worse than on buster or newer!"

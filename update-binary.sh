@@ -10,7 +10,7 @@ verlt() {
     [ "$1" = "$2" ] && return 1 || verlte $1 $2
 }
 
-libc=$(ldconfig -v 2>/dev/null | grep libc-2 | tail -n1 | cut -d'>' -f2 | tr -d " ")
+libc=$(ldd --version | grep -i glibc | grep -o -e '[0-9.]*$')
 
 ARCH=arm
 if dpkg --print-architecture | grep -F -e armhf &>/dev/null; then
@@ -34,7 +34,7 @@ fi
 URL="https://github.com/wiedehopf/airspy-conf/raw/master"
 
 OS="buster"
-required_libc="libc-2.28.so"
+required_libc="2.28"
 if uname -m | grep -qs armv7; then
     OS="buster"
     ARCH=armv7

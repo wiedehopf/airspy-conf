@@ -35,15 +35,21 @@ URL="https://github.com/wiedehopf/airspy-conf/raw/master"
 
 OS="buster"
 required_buster="2.28"
+required_bullseye="2.31"
 required_bookworm="2.36"
 if uname -m | grep -qs armv7; then
     OS="buster"
     ARCH=armv7
     echo "avm7l special case only buster (libc-2.28) and later, found libc version: $libc"
-elif uname -m | grep -qs aarch64 && [[ -n "$libc" ]] && ! verlt "$libc" "$required_bookworm"; then
+elif [[ -n "$libc" ]] && ! verlt "$libc" "$required_bookworm"; then
     OS="bookworm"
     echo "----------------"
     echo libc version: "$libc >= $required_bookworm"
+    echo "----------------"
+elif [[ -n "$libc" ]] && ! verlt "$libc" "$required_bullseye"; then
+    OS="bullseye"
+    echo "----------------"
+    echo libc version: "$libc >= $required_bullseye"
     echo "----------------"
 elif [[ -n "$libc" ]] && ! verlt "$libc" "$required_buster"; then
     OS="buster"

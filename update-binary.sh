@@ -37,11 +37,7 @@ OS="buster"
 required_buster="2.28"
 required_bullseye="2.31"
 required_bookworm="2.36"
-if uname -m | grep -qs armv7; then
-    OS="buster"
-    ARCH=armv7
-    echo "avm7l special case only buster (libc-2.28) and later, found libc version: $libc"
-elif [[ -n "$libc" ]] && ! verlt "$libc" "$required_bookworm"; then
+if [[ -n "$libc" ]] && ! verlt "$libc" "$required_bookworm"; then
     OS="bookworm"
     echo "----------------"
     echo libc version: "$libc >= $required_bookworm"
@@ -57,11 +53,17 @@ elif [[ -n "$libc" ]] && ! verlt "$libc" "$required_buster"; then
     echo libc version: "$libc >= $required_buster"
     echo "----------------"
 else
-    OS="stretch"
-    echo "----------------"
-    echo "Seems your system is a bit old, performance may be worse than on buster or newer!"
-    echo libc version: "$libc < $required_buster"
-    echo "----------------"
+    if uname -m | grep -qs armv7; then
+        OS="buster"
+        ARCH=armv7
+        echo "avm7l special case only buster (libc-2.28) and later, found libc version: $libc"
+    else
+        OS="stretch"
+        echo "----------------"
+        echo "Seems your system is a bit old, performance may be worse than on buster or newer!"
+        echo libc version: "$libc < $required_buster"
+        echo "----------------"
+    fi
 fi
 
 binary="${URL}/${OS}/airspy_adsb-linux-${ARCH}.tgz"

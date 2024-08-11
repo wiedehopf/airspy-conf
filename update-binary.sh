@@ -14,10 +14,15 @@ libc=$(ldd --version | grep -i glibc | grep -o -e '[0-9.]*$')
 
 ARCH=arm
 if dpkg --print-architecture | grep -F -e armhf &>/dev/null; then
-    ARCH=arm
+    if uname -m | grep -qs -e armv7 -e aarch64 -e arm64; then
+        ARCH=armv7
+    else
+        ARCH=arm
+    fi
 elif uname -m | grep -F -e arm64 -e aarch64 &>/dev/null; then
     ARCH=arm64
 elif uname -m | grep -F -e arm &>/dev/null; then
+    # unexpected fallback
     ARCH=arm
 elif dpkg --print-architecture | grep -F -e i386 &>/dev/null; then
     ARCH=i386
@@ -53,16 +58,15 @@ elif [[ -n "$libc" ]] && ! verlt "$libc" "$required_buster"; then
     echo libc version: "$libc >= $required_buster"
     echo "----------------"
 else
-    if uname -m | grep -qs armv7; then
-        OS="buster"
-        ARCH=armv7
-        echo "avm7l special case only buster (libc-2.28) and later, found libc version: $libc"
-    else
-        OS="stretch"
-        echo "----------------"
-        echo "Seems your system is a bit old, performance may be worse than on buster or newer!"
-        echo libc version: "$libc < $required_buster"
-        echo "----------------"
+    OS="stretch"
+    echo "----------------"
+    echo "Seems your system is a bit old, performance may be worse than on buster or newer!"
+    echo libc version: "$libc < $required_buster"
+    echo "----------------"
+
+    if [[ $ARCH == armv7 ]]; then
+        # no armv7 compile for stretch, not sure why and doesn't really matter
+        ARCH=arm
     fi
 fi
 

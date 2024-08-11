@@ -14,7 +14,7 @@ libc=$(ldd --version | grep -i glibc | grep -o -e '[0-9.]*$')
 
 ARCH=arm
 if dpkg --print-architecture | grep -F -e armhf &>/dev/null; then
-    if uname -m | grep -qs -e armv7 -e aarch64 -e arm64; then
+    if uname -m | grep -qs -e armv7; then
         ARCH=armv7
     else
         ARCH=arm

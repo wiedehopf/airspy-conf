@@ -4,20 +4,25 @@ set -e
 trap 'echo "[ERROR] Error in line $LINENO when executing: $BASH_COMMAND"' ERR
 
 verlte() {
-    [  "$1" = "$(echo -e "$1\n$2" | sort -V | head -n1)" ]
+    [[  "$1" == "$(echo -e "$1\n$2" | sort -V | head -n1)" ]]
 }
 verlt() {
-    [ "$1" = "$2" ] && return 1 || verlte $1 $2
+    [[ "$1" == "$2" ]] && return 1 || verlte $1 $2
 }
 
-libc=$(ldconfig -v 2>/dev/null | grep libc-2 | tail -n1 | cut -d'>' -f2 | tr -d " ")
+libc=$(ldd --version | grep -i glibc | grep -o -e '[0-9.]*$')
 
 ARCH=arm
 if dpkg --print-architecture | grep -F -e armhf &>/dev/null; then
-    ARCH=arm
+    if uname -m | grep -qs -e armv7; then
+        ARCH=armv7
+    else
+        ARCH=arm
+    fi
 elif uname -m | grep -F -e arm64 -e aarch64 &>/dev/null; then
     ARCH=arm64
 elif uname -m | grep -F -e arm &>/dev/null; then
+    # unexpected fallback
     ARCH=arm
 elif dpkg --print-architecture | grep -F -e i386 &>/dev/null; then
     ARCH=i386
@@ -34,21 +39,35 @@ fi
 URL="https://github.com/wiedehopf/airspy-conf/raw/master"
 
 OS="buster"
-required_libc="libc-2.28.so"
-if uname -m | grep -qs armv7; then
+required_buster="2.28"
+required_bullseye="2.31"
+required_bookworm="2.36"
+if [[ -n "$libc" ]] && ! verlt "$libc" "$required_bookworm"; then
+    OS="bookworm"
+    echo "----------------"
+    echo libc version: "$libc >= $required_bookworm"
+    echo "----------------"
+elif [[ -n "$libc" ]] && ! verlt "$libc" "$required_bullseye"; then
+    OS="bullseye"
+    echo "----------------"
+    echo libc version: "$libc >= $required_bullseye"
+    echo "----------------"
+elif [[ -n "$libc" ]] && ! verlt "$libc" "$required_buster"; then
     OS="buster"
-    ARCH=armv7
-    echo "avm7l special case only buster (libc-2.28) and later, found libc version: $libc"
-elif [[ -z "$libc" ]] || verlt "$libc" "$required_libc"; then
+    echo "----------------"
+    echo libc version: "$libc >= $required_buster"
+    echo "----------------"
+else
     OS="stretch"
     echo "----------------"
     echo "Seems your system is a bit old, performance may be worse than on buster or newer!"
-    echo "$libc < $required_libc"
+    echo libc version: "$libc < $required_buster"
     echo "----------------"
-else
-    echo "----------------"
-    echo "$libc >= $required_libc"
-    echo "----------------"
+
+    if [[ $ARCH == armv7 ]]; then
+        # no armv7 compile for stretch, not sure why and doesn't really matter
+        ARCH=arm
+    fi
 fi
 
 binary="${URL}/${OS}/airspy_adsb-linux-${ARCH}.tgz"
@@ -71,8 +90,6 @@ if ! ./airspy_adsb -h &>/dev/null; then
     echo "ARCH=${ARCH} libc=${libc} Error, can't execute the binary, please report $(uname -m) and the above error."
     exit 1
 fi
-
-
 
 
 # ------------------

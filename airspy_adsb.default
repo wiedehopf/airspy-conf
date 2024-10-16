@@ -30,6 +30,8 @@ OPTIONS= -v -t 90 -f 1 -w 5 -P 8 -C 60 -E 20
 #
 #-x: dx mode, introduces bogus messages, improves reception of weak messages (opinion: not worth it)
 #-p: bit packing, reduces USB bandwidth.
+#
+#-s: serial, add 0x in front of the serial for hexadecimal serials
 
 # please always check the following command for the options used by the current version:
 # airspy_adsb -h

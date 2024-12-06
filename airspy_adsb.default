@@ -28,7 +28,7 @@ OPTIONS= -v -t 90 -f 1 -w 5 -P 8 -C 60 -E 20
 #
 #-v: verbose, will provide messages to system log, read with this command: sudo journalctl -u airspy_adsb
 #
-#-x: dx mode, introduces bogus messages, improves reception of weak messages (opinion: not worth it)
+#-x: dx mode, introduces bogus messages, improves reception of weak messages (don't use if you feed any aggregators)
 #-p: bit packing, reduces USB bandwidth.
 #
 #-s: serial, add 0x in front of the serial for hexadecimal serials

@@ -25,5 +25,11 @@ systemctl is-enabled piaware &>/dev/null && systemctl restart --no-block piaware
 systemctl is-enabled dump1090-fa &>/dev/null && systemctl restart --no-block dump1090-fa || true
 systemctl is-enabled readsb &>/dev/null && systemctl restart --no-block readsb || true
 
+rm -f /etc/udev/rules.d/airspy_adsb.rules
+udevadm control --reload-rules
+udevadm trigger
+
+deluser airspy_adsb
+
 echo "------------------------"
 echo "airspy-conf uninstall finished successfully!"

@@ -1,0 +1,4 @@
+# added by https://github.com/wiedehopf/airspy-conf/blob/master/install.sh
+
+# Airspy Mini
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="60a1", MODE:="0660", GROUP:="plugdev"

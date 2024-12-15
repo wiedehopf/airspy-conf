@@ -97,6 +97,16 @@ repository=https://raw.githubusercontent.com/wiedehopf/airspy-conf/master
 systemctl stop airspy_adsb &>/dev/null || true
 cp -f airspy_adsb /usr/local/bin/
 
+# create user incl. group
+adduser --system --comment "Unprivileged user for running airspy_adsb" airspy_adsb
+adduser airspy_adsb plugdev
+
+# install udev rules for airspy
+rm -f /etc/udev/rules.d/airspy_adsb.rules
+wget -q -O /etc/udev/rules.d/airspy_adsb.rules $repository/airspy_adsb.rules
+udevadm control --reload-rules
+udevadm trigger
+
 #install and enable systemd service
 rm -f /etc/systemd/system/airspy_adsb.service
 wget -q -O /lib/systemd/system/airspy_adsb.service $repository/airspy_adsb.service

@@ -10,7 +10,7 @@ EnvironmentFile=/etc/default/airspy_adsb
 ExecStart=/usr/bin/taskset -c $AFFINITY /usr/local/bin/airspy_adsb $OPTIONS $NET $G $GAIN $M $SAMPLE_RATE $STATS
 
 SyslogIdentifier=airspy_adsb
-User=root
+User=airspy_adsb
 
 Nice=-19
 

@@ -98,7 +98,7 @@ systemctl stop airspy_adsb &>/dev/null || true
 cp -f airspy_adsb /usr/local/bin/
 
 # create user incl. group
-adduser --system --comment "Unprivileged user for running airspy_adsb" airspy_adsb
+adduser --system airspy_adsb
 adduser airspy_adsb plugdev
 
 # install udev rules for airspy

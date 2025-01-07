@@ -4,7 +4,7 @@ GAIN= auto
 
 #other options, append or remove from the line starting with OPTIONS=
 
-OPTIONS= -v -t 90 -f 1 -w 5 -P 8 -C 60 -E 20
+OPTIONS= -v -t 90 -f 1 -w 5 -P 5 -C 60 -E 20
 
 #-C: CPU target in time percentage: 5 to 95 (adjust preamble filter while running to target CPU load)
 #    a CPU target of 50 will use around 1 core completely on a multi-core system
@@ -12,8 +12,8 @@ OPTIONS= -v -t 90 -f 1 -w 5 -P 8 -C 60 -E 20
 #
 #-E <max_preamble_filter>   Maximum preamble filter when using CPU target 0..60 (default: 60)
 #-P <non_crc_preamble_filter> non-CRC Preamble filter: 1..preamble_filter
-#   a low setting (8 or less) for -P can help when running higher -e or -C and encountering wrong altitudes or planes showing ground in VRS
-#   note this will reduce the number of messages without CRC, for example altitude of MLAT aircraft
+#   a low setting (5 or less) for -P can help when running higher -e or -C and encountering wrong altitudes or planes showing ground in VRS
+#   note this will slightly reduce the number of messages without CRC, for example altitude of MLAT aircraft
 #   at the same time it will reduce CPU usage which can be used to get some more ADS-B position messages
 #
 #-w <whitelist_threshold>   Whitelist threshold: 1..10 (default: 5, lower not recommended due to bogus messages

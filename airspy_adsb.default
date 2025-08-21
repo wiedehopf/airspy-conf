@@ -4,7 +4,9 @@ GAIN= auto
 
 #other options, append or remove from the line starting with OPTIONS=
 
-OPTIONS= -v -t 90 -f 1 -w 5 -P 5 -C 60 -E 20
+OPTIONS= -v -t 90 -f 1 -w 5 -P 5 -C 85 -E 20
+
+# increase -E 20 to -E 60 for maximum performance if you don't mind the CPU usage.
 
 #-C: CPU target in time percentage: 5 to 95 (adjust preamble filter while running to target CPU load)
 #    a CPU target of 50 will use around 1 core completely on a multi-core system

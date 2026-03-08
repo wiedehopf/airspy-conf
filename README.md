@@ -119,6 +119,24 @@ sudo bash -c "$(wget -O - https://raw.githubusercontent.com/wiedehopf/airspy-con
 
 ---
 
+## Performance tuning notes
+
+A high preamble filter has no downsides at besides increased CPU usage.
+You don't get a huge number of extra positions and usually no extra range really.
+Going from 12 to 20 MSPS i'd only recommend if you already run 12 msps and 60 preamble filter and want to
+use a LOT more CPU.
+The differences are not big. Between 12 and 20 msps is a bit more noticeable in Europe with message rates > 2000.
+But even there it's probably < 3% in regards to the position count you get.
+This doesn't translate into FA stats because they will only use 1 position every 5 or 10
+seconds, their stats don't account for a high update rate for a plane.
+Finding sub 5% differences is very hard due to traffic fluctuations.
+Only good way to test really is to have a splitter and two airspy but that's not useful unless you
+have money to burn or have the 2nd airspy for other purposes.
+If you don't care about CPU and have the airspy mini in a temperate environment, i'd just run 20
+MSPS preamble filter 60.
+But 20 MSPS will more easily cause MLAT issues so if you find you have bad sync / clock unstable,
+best to go to 12 MSPS.
+
 ## Other feeders
 
 It should work fine with all the common feeders (fr24, planefinder, ...).
